@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'ruby-clock'
+include RubyClock
+
+listen_to_signals
+
+load 'Clockfile'
+
+run_jobs
