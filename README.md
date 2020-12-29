@@ -1,15 +1,32 @@
-# Ruby::Cron
+# ruby-clock
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby/cron`. To experiment with that code, run `bin/console` for an interactive prompt.
+ruby-clock is a [job scheduler](https://en.wikipedia.org/wiki/Job_scheduler),
+known by heroku as a [clock process](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes).
+In many cases it can replace the use of cron.
 
-TODO: Delete this and the text above, and describe your gem
+This gem is very small with very few lines of code. For all its scheduling capabilities,
+it relies on the venerable [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/).
+rufus-scheduler
+[does not aim to be a standalone process or a cron replacement](https://github.com/jmettraux/rufus-scheduler/issues/307),
+ruby-clock does.
+
+Jobs are all run in their own parallel threads within the same process.
+
+The clock process will respond to signals INT (^c at the command line) and
+TERM (signal sent by environments such as Heroku and other PaaS's when shutting down).
+In both cases, the clock will stop running jobs and give existing jobs 29 seconds
+to stop before killing them.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
-gem 'ruby-cron'
+gem 'ruby-clock'
+
+# ruby-clock currently depends on rufus-scheduler master
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+gem 'rufus-scheduler', github: 'jmettraux/rufus-scheduler'
 ```
 
 And then execute:
@@ -18,21 +35,71 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby-cron
+    $ gem install ruby-clock
 
 ## Usage
 
-TODO: Write usage instructions here
+Write a file with your scheduled jobs in it, named Clockfile. The DSL and capabilities
+are the same as those of [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/).
+Read the rufus-scheduler documentation to see what you can do.
 
-## Development
+```ruby
+schedule.every('5 minutes') do
+  UserDataReports.generate
+end
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+# do something every day, five minutes after midnight
+scheduler.cron '5 0 * * *' do
+  DailyActivitySummary.generate_and_send
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To start your clock process:
 
-## Contributing
+    bundle exec clock
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruby-cron.
+### Rails
+
+To run your clock process in your app's environment:
+
+    bundle exec rails runner clock
+
+### Non-Rails
+
+Require your app's code at the top of Clockfile:
+
+```ruby
+require_relative './lib/app.rb'
+schedule.every('5 minutes') do
+...
+```
+
+### Heroku and other PaaS's
+
+Add this line to your Procfile
+
+```
+clock: bundle exec rails runer clock
+```
+
+## More Config and Capabilities
+
+### Error Handling
+
+todo
+
+### Callbacks
+
+todo
+
+### rufus-scheduler Options
+
+All rufus-scheduler options are set to defaults. The `schedule` variable
+Available in your Clockfile is and instance of `Rufus::Scheduler`,
+so anything you can do on this instance, you can do in your Clockfile.
+
+Perhaps in the future ruby-clock will add some easier specific configuration
+capabilities for some things. Let me know if you have a request!
 
 
 ## License
