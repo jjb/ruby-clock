@@ -39,7 +39,8 @@ Or install it yourself as:
 
 ## Usage
 
-Write a file with your scheduled jobs in it, named Clockfile. The DSL and capabilities
+Create a file named Clockfile. This will hold your job definitions.
+The DSL and capabilities
 are the same as those of [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/).
 Read the rufus-scheduler documentation to see what you can do.
 
@@ -49,7 +50,7 @@ schedule.every('5 minutes') do
 end
 
 # do something every day, five minutes after midnight
-scheduler.cron '5 0 * * *' do
+schedule.cron '5 0 * * *' do
   DailyActivitySummary.generate_and_send
 end
 ```
@@ -95,7 +96,7 @@ todo
 ### rufus-scheduler Options
 
 All rufus-scheduler options are set to defaults. The `schedule` variable
-Available in your Clockfile is and instance of `Rufus::Scheduler`,
+available in your Clockfile is and instance of `Rufus::Scheduler`,
 so anything you can do on this instance, you can do in your Clockfile.
 
 Perhaps in the future ruby-clock will add some easier specific configuration
