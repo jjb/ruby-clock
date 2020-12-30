@@ -98,9 +98,11 @@ end
 
 ### Callbacks
 
-todo
+You can define before, after, and around callbacks which will run for all jobs.
+Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
+to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
-### rufus-scheduler Options
+### other rufus-scheduler Options
 
 All rufus-scheduler options are set to defaults. The `schedule` variable
 available in your Clockfile is an instance of `Rufus::Scheduler`,
