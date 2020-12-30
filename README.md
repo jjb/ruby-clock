@@ -96,7 +96,7 @@ todo
 ### rufus-scheduler Options
 
 All rufus-scheduler options are set to defaults. The `schedule` variable
-available in your Clockfile is and instance of `Rufus::Scheduler`,
+available in your Clockfile is an instance of `Rufus::Scheduler`,
 so anything you can do on this instance, you can do in your Clockfile.
 
 Perhaps in the future ruby-clock will add some easier specific configuration
