@@ -87,7 +87,14 @@ clock: bundle exec rails runer clock
 
 ### Error Handling
 
-todo
+You can catch and report errors raised in your jobs by defining an error catcher at
+the top of your Clockfile like this:
+
+```ruby
+def schedule.on_error(job, error)
+  ErrorReporter.track_exception(error)
+end
+```
 
 ### Callbacks
 
