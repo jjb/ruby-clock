@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ruby-clock (0.1.0)
-      rufus-scheduler (>= 3.7.0)
+    ruby-clock (0.3.0)
+      rufus-scheduler (~> 3.7.0)
 
 GEM
   remote: https://rubygems.org/
