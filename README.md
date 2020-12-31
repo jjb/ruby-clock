@@ -23,10 +23,6 @@ Add these lines to your application's Gemfile:
 
 ```ruby
 gem 'ruby-clock'
-
-# ruby-clock currently depends on rufus-scheduler master
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-gem 'rufus-scheduler', github: 'jmettraux/rufus-scheduler'
 ```
 
 And then execute:
