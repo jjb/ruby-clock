@@ -11,7 +11,9 @@ module RubyClock
   def listen_to_signals
     signals = %w[INT TERM]
     signals.each do |signal|
-      Signal.trap(signal) { shutdown }
+      Signal.trap(signal) do
+        shutdown
+      end
     end
   end
 
