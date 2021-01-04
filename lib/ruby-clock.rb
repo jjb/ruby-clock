@@ -9,8 +9,10 @@ module RubyClock
   end
 
   def listen_to_signals
-    Signal.trap('INT') { shutdown }
-    Signal.trap('TERM') { shutdown }
+    signals = %w[INT TERM]
+    signals.each do |signal|
+      Signal.trap(signal) { shutdown }
+    end
   end
 
   def schedule
