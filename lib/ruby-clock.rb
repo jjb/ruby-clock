@@ -10,9 +10,13 @@ module RubyClock
   def listen_to_signals
     signals = %w[INT TERM]
     signals.each do |signal|
-      Signal.trap(signal) do
+      old_handler = Signal.trap(signal) do
         shutdown
-        exit
+        if old_handler.respond_to?(:call)
+          old_handler.call
+        else
+          exit
+        end
       end
     end
   end
