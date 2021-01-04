@@ -57,9 +57,13 @@ To start your clock process:
 
 ### Rails
 
+Install the `clock` binstub and commit to your repo.
+
+    bundle binstubs ruby-clock
+
 To run your clock process in your app's environment:
 
-    bundle exec rails runner clock
+    bundle exec rails runner bin/clock
 
 ### Non-Rails
 
@@ -76,7 +80,7 @@ schedule.every('5 minutes') do
 Add this line to your Procfile
 
 ```
-clock: bundle exec rails runer clock
+clock: bundle exec rails runner bin/clock
 ```
 
 ## More Config and Capabilities
