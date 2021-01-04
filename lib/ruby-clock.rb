@@ -5,7 +5,6 @@ module RubyClock
   def shutdown
     puts "Shutting down 🐈️ 👋"
     puts Rufus::Scheduler.singleton.shutdown(wait: 29)
-    exit
   end
 
   def listen_to_signals
@@ -13,6 +12,7 @@ module RubyClock
     signals.each do |signal|
       Signal.trap(signal) do
         shutdown
+        exit
       end
     end
   end
