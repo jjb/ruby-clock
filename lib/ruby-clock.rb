@@ -3,7 +3,7 @@ require 'rufus-scheduler'
 
 module RubyClock
   def shutdown
-    puts "Shutting down 🐈️ 👋"
+    puts "Shutting down ruby-clock 🐈️ 👋"
     puts Rufus::Scheduler.singleton.shutdown(wait: 29)
   end
 
@@ -26,6 +26,7 @@ module RubyClock
   end
 
   def run_jobs
+    puts "Starting ruby-clock with #{schedule.jobs.size} jobs"
     Rufus::Scheduler.singleton.join
   end
 end
