@@ -5,7 +5,7 @@ require 'ruby-clock'
 class Rufus::Scheduler::Job
   def identifier
     @identifier ||= begin
-      name || handler.source.split("\n").reject{|l| l.empty? }.grep_v(/#.*/)[-2].strip
+      name || handler.source.split("\n").reject(&:empty?).grep_v(/#.*/)[-2].strip
     rescue
       source_location.join('-')
     rescue
