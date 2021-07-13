@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'ruby-clock'
+require 'method_source'
 
 class Rufus::Scheduler::Job
   def identifier
