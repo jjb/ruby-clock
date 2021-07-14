@@ -1,6 +1,20 @@
 #!/usr/bin/env ruby
 
 require 'ruby-clock'
+require 'method_source'
+
+class Rufus::Scheduler::Job
+  def identifier
+    @identifier ||= begin
+      name || handler.source.split("\n").reject(&:empty?).grep_v(/#.*/)[-2].strip
+    rescue
+      source_location.join('-')
+    rescue
+      'error-calculating-job-identifier'
+    end
+  end
+end
+
 include RubyClock
 
 listen_to_signals

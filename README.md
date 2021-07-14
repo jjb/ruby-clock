@@ -102,6 +102,63 @@ You can define before, after, and around callbacks which will run for all jobs.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+### Job Identifier
+
+ruby-clock adds the `identifier` method to `Rufus::Scheduler::Job`. This method will return the job's
+[name](https://github.com/jmettraux/rufus-scheduler/#name--string) if one was given.
+If a name is not given, the last non-comment code line in the job's block
+will be used instead. If for some reason an error is encountered while calculating this, the next
+fallback is the line number of the job in Clockfile.
+
+Some examples of jobs and their identifiers:
+
+```ruby
+schedule.every '1 second', name: 'my job' do |variable|
+  Foo.bar
+end
+# => my job
+
+schedule.every '1 day', name: 'my job' do |variable|
+  daily_things = Foo.setup_daily
+  daily_things.process
+  # TODO: figure out best time of day
+end
+# => daily_things.process
+
+# n.b. ruby-clock isn't yet smart enough to remove trailing comments
+schedule.every '1 week', name: 'my job' do |variable|
+  weekly_things = Foo.setup_weekly
+  weekly_things.process # does this work???!1~
+end
+# => weekly_things.process # does this work???!1~
+```
+
+This can be used for keeping track of job behavior in logs or a
+stats tracker. For example:
+
+```ruby
+def schedule.on_post_trigger(job, trigger_time)
+  duration = Time.now-trigger_time.to_t
+  StatsTracker.value('Clock: Job Execution Time', duration.round(2))
+  StatsTracker.value("Clock: Job #{job.identifier} Execution Time", duration.round(2))
+  StatsTracker.increment('Clock: Job Executions')
+end
+
+schedule.every '10 seconds', name: 'thread stats' do
+  thread_usage = Hash.new(0)
+  schedule.work_threads(:active).each do |t|
+    thread_usage[t[:rufus_scheduler_job].identifier] += 1
+  end
+  thread_usage.each do |job, count|
+    StatsTracker.value("Clock: Job #{job} Active Threads", count)
+  end
+
+  StatsTracker.value("Clock: Active Threads", schedule.work_threads(:active).size)
+  StatsTracker.value("Clock: Vacant Threads", schedule.work_threads(:vacant).size)
+  StatsTracker.value("Clock: DB Pool Size", ActiveRecord::Base.connection_pool.connections.size)
+end
+```
+
 ### other rufus-scheduler Options
 
 All rufus-scheduler options are set to defaults. The `schedule` variable
