@@ -118,7 +118,7 @@ schedule.every '1 second', name: 'my job' do |variable|
 end
 # => my job
 
-schedule.every '1 day', name: 'my job' do |variable|
+schedule.every '1 day' do |variable|
   daily_things = Foo.setup_daily
   daily_things.process
   # TODO: figure out best time of day
@@ -126,7 +126,7 @@ end
 # => daily_things.process
 
 # n.b. ruby-clock isn't yet smart enough to remove trailing comments
-schedule.every '1 week', name: 'my job' do |variable|
+schedule.every '1 week' do |variable|
   weekly_things = Foo.setup_weekly
   weekly_things.process # does this work???!1~
 end
