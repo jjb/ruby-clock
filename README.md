@@ -168,6 +168,14 @@ so anything you can do on this instance, you can do in your Clockfile.
 Perhaps in the future ruby-clock will add some easier specific configuration
 capabilities for some things. Let me know if you have a request!
 
+## Syntax highlighting for Clockfile
+
+To tell github and maybe other systems to syntax highlight Clockfile, put this in a .gitattributes file:
+
+```gitattributes
+Clockfile linguist-language=Ruby
+```
+
 
 ## License
 
