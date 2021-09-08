@@ -19,6 +19,6 @@ include RubyClock
 
 listen_to_signals
 
-load 'Clockfile'
+load ARGV[0] || 'Clockfile'
 
 run_jobs
