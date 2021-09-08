@@ -4,7 +4,7 @@ require 'rufus-scheduler'
 module RubyClock
   def shutdown
     puts "Shutting down ruby-clock 🐈️ 👋"
-    Rufus::Scheduler.singleton.shutdown(wait: 29)
+    Rufus::Scheduler.singleton.shutdown(wait: ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29)
   end
 
   def listen_to_signals
