@@ -55,6 +55,11 @@ To start your clock process:
 
     bundle exec clock
 
+To use a file other than Clockfile for job definitions, specify it.
+This will ignore Clockfile and only read jobs from clocks/MyClockfile:
+
+    bundle exec clock clocks/MyClockfile
+
 ### Rails
 
 Install the `clock` binstub and commit to your repo.
@@ -82,6 +87,20 @@ Add this line to your Procfile
 ```
 clock: bundle exec rails runner bin/clock
 ```
+
+You might have a main clock for general scheduled jobs, and then standalone ones
+if your system has something where you want to monitor and adjust resources
+for that work more precisely. Here, maybe the main clock needs a 2GB instance,
+and the others each need 1GB all to themselves:
+
+```
+clock: bundle exec rails runner bin/clock
+thing_checker: bundle exec rails runner bin/clock clocks/thing_checker.rb
+thing_reporter: bundle exec rails runner bin/clock clocks/thing_reporter.rb
+```
+
+Because of this feature, do I regret using "Clockfile" instead of, say, "clock.rb"? Maybe.
+
 
 ## More Config and Capabilities
 
