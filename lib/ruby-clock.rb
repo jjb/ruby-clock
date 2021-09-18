@@ -68,4 +68,8 @@ module RubyClock
     @rake_mutex.synchronize { rake_async(task) }
   end
 
+  def shell(command)
+    Terrapin::CommandLine.new(command).run
+  end
+
 end

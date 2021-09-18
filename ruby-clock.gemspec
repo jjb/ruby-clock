@@ -31,4 +31,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rufus-scheduler", '~> 3.8'
   spec.add_dependency "method_source"
+  spec.add_dependency "terrapin", '~> 0.6'
+  spec.add_dependency "posix-spawn", '~> 0.3.15'
 end
