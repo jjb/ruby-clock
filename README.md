@@ -136,6 +136,20 @@ You can define before, after, and around callbacks which will run for all jobs.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+### Rake tasks
+
+You can run tasks from within the persistent runtime of ruby-clock, without
+needing to shell out and start another process.
+
+```ruby
+schedule.every '1 day' do |variable|
+  rake('reports:daily')
+end
+```
+
+There is also `rake_execute` and `rake_async`. See [the code](https://github.com/jjb/ruby-clock/blob/main/lib/ruby-clock.rb)
+and [this article](https://code.jjb.cc/running-rake-tasks-from-within-ruby-on-rails-code) for more info.
+
 ### Job Identifier
 
 ruby-clock adds the `identifier` method to `Rufus::Scheduler::Job`. This method will return the job's

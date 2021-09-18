@@ -2,6 +2,7 @@
 
 * fixed rare error when calculating job identifier
 * nicer shutdown logging, indicating when shutdown process begins and ends
+* ability to run rake tasks
 
 ## 0.7.0
 
