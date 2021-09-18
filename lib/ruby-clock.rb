@@ -33,7 +33,7 @@ module RubyClock
   end
 
   def prepare_rake
-    if Rails&.application
+    if defined?(::Rails) && Rails.application
       Rails.application.load_tasks
       Rake::Task.tasks.each{|t| t.prerequisites.delete 'environment' }
       @rake_mutex = Mutex.new
