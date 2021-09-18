@@ -29,6 +29,7 @@ module RubyClock
 
   def run_jobs
     puts "Starting ruby-clock with #{schedule.jobs.size} jobs"
+    schedule.resume
     schedule.join
   end
 

@@ -21,7 +21,19 @@ include RubyClock
 
 listen_to_signals
 prepare_rake
+schedule.pause
 
 load ARGV[0] || 'Clockfile'
+
+if ::Rails
+  schedule.instance_eval do
+    @old_around_trigger = method :around_trigger
+    def around_trigger(job)
+      ::Rails.application.reloader.wrap do
+        @old_around_trigger.call(job){ yield }
+      end
+    end
+  end
+end
 
 run_jobs
