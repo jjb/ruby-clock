@@ -168,7 +168,7 @@ You can run tasks from within the persistent runtime of ruby-clock, without
 needing to shell out and start another process.
 
 ```ruby
-schedule.every '1 day' do |variable|
+schedule.every '1 day' do
   rake('reports:daily')
 end
 ```
@@ -187,12 +187,12 @@ fallback is the line number of the job in Clockfile.
 Some examples of jobs and their identifiers:
 
 ```ruby
-schedule.every '1 second', name: 'my job' do |variable|
+schedule.every '1 second', name: 'my job' do
   Foo.bar
 end
 # => my job
 
-schedule.every '1 day' do |variable|
+schedule.every '1 day' do
   daily_things = Foo.setup_daily
   daily_things.process
   # TODO: figure out best time of day
@@ -200,7 +200,7 @@ end
 # => daily_things.process
 
 # n.b. ruby-clock isn't yet smart enough to remove trailing comments
-schedule.every '1 week' do |variable|
+schedule.every '1 week' do
   weekly_things = Foo.setup_weekly
   weekly_things.process # does this work???!1~
 end
