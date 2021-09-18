@@ -4,6 +4,7 @@
 * nicer shutdown logging, indicating when shutdown process begins and ends
 * ability to run rake tasks
 * ability to run shell commands
+* automatically wrap jobs with rails reloader
 
 ## 0.7.0
 

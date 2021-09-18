@@ -73,16 +73,8 @@ To run your clock process in your app's environment:
 
 To get smarter database connection management (such as in the case of a database restart or upgrade,
 and maybe other benefits) and code reloading in dev (app code, not the code in Clockfile itself),
-wrap your jobs in the [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html).
-In a future version of ruby-clock this will be done automagically with a railtie.
-
-```ruby
-def schedule.around_trigger(job)
-  ::Rails.application.reloader.wrap do
-    yield
-  end
-end
-```
+jobs are automatically wrapped in the
+[rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html).
 
 
 ### Non-Rails
