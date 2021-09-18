@@ -20,6 +20,7 @@ end
 include RubyClock
 
 listen_to_signals
+prepare_rake
 
 load ARGV[0] || 'Clockfile'
 
