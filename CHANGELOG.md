@@ -1,4 +1,4 @@
-## 0.8.0 UNRELEASED
+## 0.8.0 RC1
 
 * fixed rare error when calculating job identifier
 * nicer shutdown logging, indicating when shutdown process begins and ends
