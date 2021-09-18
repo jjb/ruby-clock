@@ -3,8 +3,10 @@ require 'rufus-scheduler'
 
 module RubyClock
   def shutdown
-    puts "Shutting down ruby-clock 🐈️ 👋"
-    Rufus::Scheduler.singleton.shutdown(wait: ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29)
+    wait_seconds = ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
+    puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
+    Rufus::Scheduler.singleton.shutdown(wait: wait_seconds)
+    puts "...done 🐈️ 👋"
   end
 
   def listen_to_signals

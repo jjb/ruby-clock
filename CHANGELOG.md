@@ -1,3 +1,8 @@
+## 0.8.0 UNRELEASED
+
+* fixed rare error when calculating job identifier
+* nicer shutdown logging, indicating when shutdown process begins and ends
+
 ## 0.7.0
 
 * ability to specify the name of the file with job definitions, e.g. `bundle exec clock clocks/MyClockfile`
