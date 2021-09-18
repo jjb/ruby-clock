@@ -5,7 +5,7 @@ module RubyClock
   def shutdown
     wait_seconds = ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
     puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
-    Rufus::Scheduler.singleton.shutdown(wait: wait_seconds)
+    schedule.shutdown(wait: wait_seconds)
     puts "...done 🐈️ 👋"
   end
 
@@ -29,7 +29,7 @@ module RubyClock
 
   def run_jobs
     puts "Starting ruby-clock with #{schedule.jobs.size} jobs"
-    Rufus::Scheduler.singleton.join
+    schedule.join
   end
 
   def prepare_rake
