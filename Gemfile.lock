@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-clock (0.6.0)
+    ruby-clock (0.7.0)
       method_source
       rufus-scheduler (~> 3.8)
 
@@ -9,9 +9,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     concurrent-ruby (1.1.9)
-    et-orbi (1.2.4)
+    et-orbi (1.2.5)
       tzinfo
-    fugit (1.5.0)
+    fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
     method_source (1.0.0)
@@ -30,4 +30,4 @@ DEPENDENCIES
   ruby-clock!
 
 BUNDLED WITH
-   2.1.4
+   2.2.23
