@@ -21,6 +21,7 @@ include RubyClock
 
 listen_to_signals
 prepare_rake
+schedule.pause
 
 load ARGV[0] || 'Clockfile'
 
