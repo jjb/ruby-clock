@@ -136,6 +136,32 @@ You can define before, after, and around callbacks which will run for all jobs.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+### Shell commands
+
+You can run shell commands in your jobs. They are invoked using
+[posix-spawn](https://github.com/rtomayko/posix-spawn), which means
+the ruby process is not forked.
+
+```ruby
+schedule.every '1 day' do
+  shell('sh scripts/process_stuff.sh')
+end
+```
+
+`shell` is a very simple convenience method which is implemented with
+[terrapin](https://github.com/thoughtbot/terrapin). If you want to use other terrapin
+features you can do so:
+
+```ruby
+schedule.every '1 day' do
+  line = Terrapin::CommandLine.new('optimize_png', ":file")
+  Organization.with_new_logos.find_each do |o|
+    line.run(file: o.logo_file_path)
+    o.update!(logo_optimized: true)
+  end
+end
+```
+
 ### Rake tasks
 
 You can run tasks from within the persistent runtime of ruby-clock, without
