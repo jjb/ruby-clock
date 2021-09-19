@@ -1,10 +1,10 @@
 ## 0.8.0 RC1
 
-* fixed rare error when calculating job identifier
-* nicer shutdown logging, indicating when shutdown process begins and ends
+* automatically wrap jobs with rails reloader
 * ability to run rake tasks
 * ability to run shell commands
-* automatically wrap jobs with rails reloader
+* nicer shutdown logging, indicating when shutdown process begins and ends
+* fix approach for error fallbacks when when calculating job identifier (probably never encountered)
 
 ## 0.7.0
 
