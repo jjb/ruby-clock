@@ -1,3 +1,7 @@
+## UNRELEASED
+
+* fix detection of Rails constant, for non-rails apps
+
 ## 0.8.0 RC1
 
 * automatically wrap jobs with rails reloader

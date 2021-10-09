@@ -25,7 +25,7 @@ schedule.pause
 
 load ARGV[0] || 'Clockfile'
 
-if ::Rails
+if defined?(::Rails)
   schedule.instance_eval do
     @old_around_trigger = method :around_trigger
     def around_trigger(job)

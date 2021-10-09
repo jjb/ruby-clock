@@ -1,0 +1,3 @@
+schedule.every('2 seconds') do
+  puts "hello from a ruby-clock job"
+end
