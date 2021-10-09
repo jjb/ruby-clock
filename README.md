@@ -108,6 +108,14 @@ thing_reporter: bundle exec rails runner bin/clock clocks/thing_reporter.rb
 
 Because of this feature, do I regret using "Clockfile" instead of, say, "clock.rb"? Maybe.
 
+#### Observing logs
+
+Because STDOUT does not flush until a certain amount of data has gone into it,
+you might not immediately see the ruby-clock startup message or job output if
+viewing logs in a deployed environment such as Heroku where the logs are redirected
+to another process or file. To change this behavior and have logs flush immediately,
+add `$stdout.sync = true` to the top of your Clockfile.
+
 
 ## More Config and Capabilities
 
