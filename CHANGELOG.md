@@ -1,4 +1,4 @@
-## UNRELEASED
+## 0.8.0 RC2
 
 * fix detection of Rails constant, for non-rails apps
 

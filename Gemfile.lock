@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-clock (0.8.0.rc1)
+    ruby-clock (0.8.0.rc2)
       method_source
       posix-spawn (~> 0.3.15)
       rufus-scheduler (~> 3.8)
