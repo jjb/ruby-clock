@@ -165,6 +165,17 @@ schedule.every '1 day' do
 end
 ```
 
+#### shutdown behavior
+
+Because of [this](https://stackoverflow.com/questions/69653842/),
+if a shell job is running during shutdown, shutdown behavior seems to be changed
+for _all_ running jobs - they no longer are allowed to finish within the timeout period.
+Everything exits immediately.
+
+Until this is figured out, if you are concerned about jobs exiting inelegantly,
+you may want to run your shell jobs in their own sperate clock process, if possible.
+
+
 ### Rake tasks
 
 You can run tasks from within the persistent runtime of ruby-clock, without
