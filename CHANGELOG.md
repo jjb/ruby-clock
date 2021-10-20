@@ -1,4 +1,4 @@
-## unreleased
+## 0.8.0 RC3
 
 * make terrapin and posix-spawn gems optional
 
