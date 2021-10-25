@@ -75,7 +75,22 @@ To get smarter database connection management (such as in the case of a database
 and maybe other benefits) and code reloading in dev (app code, not the code in Clockfile itself),
 jobs are automatically wrapped in the
 [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html).
+This [may incur a performance impact for certain jobs](https://github.com/rails/rails/issues/43504),
+I'm still exploring this.
 
+#### ActiveRecord Query Cache
+
+You may wish to
+[turn off the ActiveRecord Query Cache](https://code.jjb.cc/turning-off-activerecord-query-cache-to-improve-memory-consumption-in-background-jobs)
+for your jobs. You can do so with the around trigger:
+
+```ruby
+def schedule.around_trigger(job)
+  ActiveRecord::Base.uncached do
+    yield
+  end
+end
+```
 
 ### Non-Rails
 
