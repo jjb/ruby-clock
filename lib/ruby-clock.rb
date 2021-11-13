@@ -42,7 +42,7 @@ module RubyClock
       puts <<~MESSAGE
         Because this is not a rails application, we do not know how to load your
         rake tasks. You can do this yourself at the top of your Clockfile if you want
-        to run rake tasks from ruby-cron.
+        to run rake tasks from ruby-clock.
       MESSAGE
     end
   end
