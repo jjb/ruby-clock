@@ -1,11 +1,22 @@
+$stdout.sync = true
+
 def schedule.on_error(job, error)
   raise error
 end
 
-schedule.every('2 seconds') do
-  puts "hello from a ruby-clock job"
+# schedule.every('2 seconds') do
+#   # puts "hello from a ruby-clock job"
+# end
+
+shell 'sleep 1'
+
+schedule.every('1 seconds') do
+  shell 'sleep 5'
 end
 
-schedule.every('2 seconds') do
-  shell 'say hello'
+schedule.every('1 seconds') do
+  thing = rand
+  puts "start #{thing}"
+  `sleep 5`
+  puts "end #{thing}"
 end

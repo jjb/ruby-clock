@@ -1,6 +1,8 @@
 require "ruby-clock/version"
 require 'rufus-scheduler'
 
+puts @master_pid = Process.pid
+
 module RubyClock
   def shutdown
     wait_seconds = ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
@@ -13,6 +15,7 @@ module RubyClock
     signals = %w[INT TERM]
     signals.each do |signal|
       old_handler = Signal.trap(signal) do
+        puts ">>> handling signal from #{Process.pid}"
         shutdown
         if old_handler.respond_to?(:call)
           old_handler.call
