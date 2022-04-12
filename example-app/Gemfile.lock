@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    ruby-clock (0.8.0.rc2)
+    ruby-clock (0.8.0.rc3)
       method_source
       rufus-scheduler (~> 3.8)
 
