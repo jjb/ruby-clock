@@ -12,8 +12,8 @@ ruby-clock does.
 
 Jobs are all run in their own parallel threads within the same process.
 
-The clock process will respond to signals INT (^c at the command line) and
-TERM (signal sent by environments such as Heroku and other PaaS's when shutting down).
+The clock process will respond to signals `INT` (<kbd>^c</kbd> at the command line) and
+`TERM` (signal sent by environments such as Heroku and other PaaS's when shutting down).
 In both cases, the clock will stop running jobs and give existing jobs 29 seconds
 to stop before killing them.
 You can change this number with `RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS` in the environment.
