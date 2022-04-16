@@ -5,5 +5,5 @@ To run:
 
 ```
 bundle
-bundle exe clock
+bundle exec clock
 ```
