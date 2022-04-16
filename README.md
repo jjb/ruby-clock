@@ -188,7 +188,12 @@ for _all_ running jobs - they no longer are allowed to finish within the timeout
 Everything exits immediately.
 
 Until this is figured out, if you are concerned about jobs exiting inelegantly,
-you may want to run your shell jobs in their own sperate clock process, if possible.
+you may want to run your shell jobs in their own sperate clock process.
+
+```
+bundle exec rails runner bin/clock clocks/main_jobs.rb
+bundle exec rails runner bin/clock clocks/shell_jobs.rb
+```
 
 
 ### Rake tasks
