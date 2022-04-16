@@ -1,13 +1,7 @@
-## 0.8.0 RC3
+## 1.0.0
 
 * make terrapin and posix-spawn gems optional
-
-## 0.8.0 RC2
-
 * fix detection of Rails constant, for non-rails apps
-
-## 0.8.0 RC1
-
 * automatically wrap jobs with rails reloader
 * ability to run rake tasks
 * ability to run shell commands
