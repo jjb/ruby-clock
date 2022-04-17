@@ -4,6 +4,10 @@ ruby-clock is a [job scheduler](https://en.wikipedia.org/wiki/Job_scheduler),
 known by heroku as a [clock process](https://devcenter.heroku.com/articles/scheduled-jobs-custom-clock-processes).
 In many cases it can replace the use of cron.
 
+Why another ruby scheduler project? See
+[this feature matrix of the space](https://docs.google.com/spreadsheets/d/148VMKY9iyOyUASYytSGiUJKvH0-O5Ri-3Cwr3S6DRPU/edit?usp=sharing).
+Feel free to leave a comment with suggestions for changes or additions.
+
 This gem is very small with very few lines of code. For all its scheduling capabilities,
 it relies on the venerable [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/).
 rufus-scheduler
