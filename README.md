@@ -67,12 +67,18 @@ This will ignore Clockfile and only read jobs from clocks/MyClockfile:
 
 ### Rails
 
+**In rails 7, [rails started wraping rails runner invocations in an executor](https://github.com/rails/rails/blob/main/railties/lib/rails/commands/runner/runner_command.rb#L38-L52).
+This is a great idea but not
+ideal for our use here in ruby-clock. I will be updating ruby clock and the recommended use in rails
+eventually. If you need this, please contact me.**
+
 Install the `clock` binstub and commit to your repo.
 
     bundle binstubs ruby-clock
 
 To run your clock process in your app's environment:
 
+    # not ideal in rails >=7, see note above
     bundle exec rails runner bin/clock
 
 To get smarter database connection management (such as in the case of a database restart or upgrade,
