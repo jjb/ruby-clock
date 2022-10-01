@@ -8,8 +8,10 @@
 
 * There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
 * The invocations (in Procfile, or wherever else you start ruby-clock) should change from
+
       bundle exec rails runner bin/clock
   to
+
       bundle exec clock
 
 ## 1.0.0
