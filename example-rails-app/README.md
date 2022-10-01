@@ -1,5 +1,7 @@
-This is a bare-bones example rails app to
+This is a bare-bones example rails 7 app to
 help with dev and also as an example for users.
+
+The only interesting thing is in Clockfile
 
 To run:
 
