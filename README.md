@@ -41,9 +41,7 @@ Or install it yourself as:
 ## Usage
 
 Create a file named Clockfile. This will hold your job definitions.
-The DSL and capabilities
-are the same as those of [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/).
-Read the rufus-scheduler documentation to see what you can do.
+Define jobs like this:
 
 ```ruby
 schedule.every('5 minutes') do
@@ -277,14 +275,15 @@ schedule.every '10 seconds', name: 'thread stats' do
 end
 ```
 
-### other rufus-scheduler Options
+### Other rufus-scheduler Options
 
-All rufus-scheduler options are set to defaults. The `schedule` variable
+All [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/) options are set to defaults. The `schedule` variable
 available in your Clockfile is an instance of `Rufus::Scheduler`,
 so anything you can do on this instance, you can do in your Clockfile.
+See the rufus-scheduler documentation to see what you can do.
 
-Perhaps in the future ruby-clock will add some easier specific configuration
-capabilities for some things. Let me know if you have a request!
+If you have ideas for rufus-scheduler features that can be brought in as
+more abstract or default ruby-clock behavior, let me know!
 
 ## Syntax highlighting for Clockfile
 
