@@ -65,19 +65,9 @@ This will ignore Clockfile and only read jobs from clocks/MyClockfile:
 
 ### Rails
 
-**In rails 7, [rails started wraping rails runner invocations in an executor](https://github.com/rails/rails/blob/main/railties/lib/rails/commands/runner/runner_command.rb#L38-L52).
-This is a great idea but not
-ideal for our use here in ruby-clock. I will be updating ruby clock and the recommended use in rails
-eventually. If you need this, please contact me.**
-
-Install the `clock` binstub and commit to your repo.
-
-    bundle binstubs ruby-clock
-
 To run your clock process in your app's environment:
 
-    # not ideal in rails >=7, see note above
-    bundle exec rails runner bin/clock
+    bundle exec clock
 
 To get smarter database connection management (such as in the case of a database restart or upgrade,
 and maybe other benefits) and code reloading in dev (app code, not the code in Clockfile itself),
@@ -85,6 +75,7 @@ jobs are automatically wrapped in the
 [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html).
 This [may incur a performance impact for certain jobs](https://github.com/rails/rails/issues/43504),
 I'm still exploring this.
+
 
 #### ActiveRecord Query Cache
 
@@ -115,7 +106,7 @@ schedule.every('5 minutes') do
 Add this line to your Procfile
 
 ```
-clock: bundle exec rails runner bin/clock
+clock: bundle exec clock
 ```
 
 You might have a main clock for general scheduled jobs, and then standalone ones
@@ -124,9 +115,9 @@ for that work more precisely. Here, maybe the main clock needs a 2GB instance,
 and the others each need 1GB all to themselves:
 
 ```
-clock: bundle exec rails runner bin/clock
-thing_checker: bundle exec rails runner bin/clock clocks/thing_checker.rb
-thing_reporter: bundle exec rails runner bin/clock clocks/thing_reporter.rb
+clock: bundle exec clock
+thing_checker: bundle exec clock clocks/thing_checker.rb
+thing_reporter: bundle exec clock clocks/thing_reporter.rb
 ```
 
 Because of this feature, do I regret using "Clockfile" instead of, say, "clock.rb"? Maybe.
@@ -199,8 +190,8 @@ Until this is figured out, if you are concerned about jobs exiting inelegantly,
 you may want to run your shell jobs in their own separate clock process.
 
 ```
-bundle exec rails runner bin/clock clocks/main_jobs.rb
-bundle exec rails runner bin/clock clocks/shell_jobs.rb
+bundle exec clock clocks/main_jobs.rb
+bundle exec clock clocks/shell_jobs.rb
 ```
 
 

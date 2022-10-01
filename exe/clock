@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+begin
+  require './config/environment.rb'
+  puts "Detected rails app has been loaded."
+rescue LoadError
+end
+
 require 'ruby-clock'
 require 'method_source'
 
