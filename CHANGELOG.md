@@ -1,3 +1,17 @@
+## 2.0.0 beta
+
+* The way the [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html)
+  is implemented is now compatible with both rails 6 and 7
+* The setup for rails is now less complicated
+
+### Migrating from ruby-clock version 1 to version 2
+
+* There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
+* The invocations (in Procfile, or wherever else you start ruby-clock) should change from
+      bundle exec rails runner bin/clock
+  to
+      bundle exec clock
+
 ## 1.0.0
 
 * make terrapin and posix-spawn gems optional
