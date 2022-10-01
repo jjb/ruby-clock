@@ -1,3 +1,7 @@
+THESE ARE THE DOCS FOR VERSION 2.0.0.beta1
+
+See version 1 docs here: https://github.com/jjb/ruby-clock/tree/v1.0.0
+
 # ruby-clock
 
 ruby-clock is a [job scheduler](https://en.wikipedia.org/wiki/Job_scheduler),
