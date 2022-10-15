@@ -34,6 +34,14 @@ def schedule
   RubyClock.instance.schedule
 end
 
+def cron(...)
+  RubyClock.instance.schedule.cron(...)
+end
+
+def every(...)
+  RubyClock.instance.schedule.every(...)
+end
+
 def shell(string)
   RubyClock.instance.shell(string)
 end
