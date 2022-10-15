@@ -1,7 +1,10 @@
 require "ruby-clock/version"
 require 'rufus-scheduler'
+require 'singleton'
 
-module RubyClock
+class RubyClock
+
+  include Singleton
 
   def wait_seconds
     ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29

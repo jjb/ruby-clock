@@ -23,11 +23,22 @@ class Rufus::Scheduler::Job
   end
 end
 
-include RubyClock
+RubyClock.instance.listen_to_signals
+RubyClock.instance.prepare_rake
+RubyClock.instance.schedule.pause
 
-listen_to_signals
-prepare_rake
-schedule.pause
+
+
+## Add methods to top-level namespace
+def schedule
+  RubyClock.instance.schedule
+end
+
+def shell(string)
+  RubyClock.instance.shell(string)
+end
+#####################################
+
 
 load ARGV[0] || 'Clockfile'
 
@@ -42,4 +53,4 @@ if defined?(::Rails)
   end
 end
 
-run_jobs
+RubyClock.instance.run_jobs
