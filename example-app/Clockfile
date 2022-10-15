@@ -1,4 +1,4 @@
-def schedule.on_error(job, error)
+on_error do |job, error|
   raise error
 end
 
