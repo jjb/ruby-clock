@@ -48,12 +48,12 @@ Create a file named Clockfile. This will hold your job definitions.
 Define jobs like this:
 
 ```ruby
-schedule.every('5 minutes') do
+every('5 minutes') do
   UserDataReports.generate
 end
 
 # do something every day, five minutes after midnight
-schedule.cron '5 0 * * *' do
+cron '5 0 * * *' do
   DailyActivitySummary.generate_and_send
 end
 ```
@@ -101,7 +101,7 @@ Require your app's code at the top of Clockfile:
 
 ```ruby
 require_relative './lib/app.rb'
-schedule.every('5 minutes') do
+every('5 minutes') do
 ...
 ```
 
@@ -159,7 +159,7 @@ to learn how to do this. Where the documentation references `s`, you should use 
 You can run shell commands in your jobs.
 
 ```ruby
-schedule.every '1 day' do
+every '1 day' do
   shell('sh scripts/process_stuff.sh')
 end
 ```
@@ -174,7 +174,7 @@ If you want to use other terrapin features, you can skip the `shell` command
 and use terrapin directly:
 
 ```ruby
-schedule.every '1 day' do
+every '1 day' do
   line = Terrapin::CommandLine.new('optimize_png', ":file")
   Organization.with_new_logos.find_each do |o|
     line.run(file: o.logo_file_path)
@@ -205,7 +205,7 @@ You can run tasks from within the persistent runtime of ruby-clock, without
 needing to shell out and start another process.
 
 ```ruby
-schedule.every '1 day' do
+every '1 day' do
   rake('reports:daily')
 end
 ```
@@ -224,12 +224,12 @@ fallback is the line number of the job in Clockfile.
 Some examples of jobs and their identifiers:
 
 ```ruby
-schedule.every '1 second', name: 'my job' do
+every '1 second', name: 'my job' do
   Foo.bar
 end
 # => my job
 
-schedule.every '1 day' do
+every '1 day' do
   daily_things = Foo.setup_daily
   daily_things.process
   # TODO: figure out best time of day
@@ -237,7 +237,7 @@ end
 # => daily_things.process
 
 # n.b. ruby-clock isn't yet smart enough to remove trailing comments
-schedule.every '1 week' do
+every '1 week' do
   weekly_things = Foo.setup_weekly
   weekly_things.process # does this work???!1~
 end
@@ -255,7 +255,7 @@ def schedule.on_post_trigger(job, trigger_time)
   StatsTracker.increment('Clock: Job Executions')
 end
 
-schedule.every '10 seconds', name: 'thread stats' do
+every '10 seconds', name: 'thread stats' do
   thread_usage = Hash.new(0)
   schedule.work_threads(:active).each do |t|
     thread_usage[t[:rufus_scheduler_job].identifier] += 1
@@ -272,9 +272,11 @@ end
 
 ### Other rufus-scheduler Options
 
-All [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/) options are set to defaults. The `schedule` variable
-available in your Clockfile is an instance of `Rufus::Scheduler`,
-so anything you can do on this instance, you can do in your Clockfile.
+All [rufus-scheduler](https://github.com/jmettraux/rufus-scheduler/) options are set to defaults.
+There is a `schedule` variable available in your Clockfile, which is the singleton instance of `Rufus::Scheduler`.
+ruby-clock methods such as `every` and `cron` are convenience methods which invoke `schedule.every`
+and `schedule.cron`.
+Anything you can do on this instance, you can do in your Clockfile.
 See the rufus-scheduler documentation to see what you can do.
 
 If you have ideas for rufus-scheduler features that can be brought in as
