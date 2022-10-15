@@ -2,18 +2,22 @@ def schedule.on_error(job, error)
   puts "An error has occurred: #{error.class}: #{error.message}"
 end
 
-schedule.every('2 seconds') do
+every('2 seconds') do
   puts "hello from a ruby-clock job"
 end
 
-schedule.every('2 seconds') do
+every('2 seconds') do
   shell 'say hello'
 end
 
-schedule.every('2 seconds') do
+every('2 seconds') do
   puts Example.count
 end
 
-schedule.every('2 seconds') do
+every('2 seconds') do
   raise "An error."
+end
+
+cron('*/10 * * * * *') do
+  puts "cron running on every 10th second #{Time.now}"
 end

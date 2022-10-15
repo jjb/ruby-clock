@@ -5,6 +5,7 @@
 * The setup for rails is now less complicated
 * RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS value is logged when starting
 * Code reorganization so there are no unnecessary methods in top-level Kernel namespace
+* DSL methods are now at the top-level namespace (`schedule.every` → `every`, `schedule.cron` → `cron`)
 
 ### Migrating from ruby-clock version 1 to version 2
 
