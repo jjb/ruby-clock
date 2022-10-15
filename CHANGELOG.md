@@ -17,6 +17,9 @@
   to
 
       bundle exec clock
+* Your existing Clockfile will still work, but you now have the option to use
+  `every`, `cron`, and `on_error` at the top-level, without referencing `schedule`.
+  See the readme for examples.
 
 ## 1.0.0
 
