@@ -17,3 +17,7 @@ end
 schedule.every('2 seconds') do
   raise "An error."
 end
+
+schedule.cron('*/10 * * * * *') do
+  puts "cron running on every 10th second #{Time.now}"
+end
