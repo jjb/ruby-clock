@@ -1,4 +1,4 @@
-THESE ARE THE DOCS FOR VERSION 2.0.0.beta1
+THESE ARE THE DOCS FOR VERSION 2.0.0.beta2
 
 See version 1 docs here: https://github.com/jjb/ruby-clock/tree/v1.0.0
 
