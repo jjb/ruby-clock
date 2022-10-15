@@ -3,6 +3,7 @@
 * The way the [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html)
   is implemented is now compatible with both rails 6 and 7
 * The setup for rails is now less complicated
+* RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS value is logged when starting
 
 ### Migrating from ruby-clock version 1 to version 2
 
