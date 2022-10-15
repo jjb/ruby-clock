@@ -2,8 +2,12 @@ require "ruby-clock/version"
 require 'rufus-scheduler'
 
 module RubyClock
+
+  def wait_seconds
+    ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
+  end
+
   def shutdown
-    wait_seconds = ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
     puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
     schedule.shutdown(wait: wait_seconds)
     puts "...done 🐈️ 👋"
@@ -21,6 +25,7 @@ module RubyClock
         end
       end
     end
+    puts "RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS is set to #{wait_seconds}"
   end
 
   def schedule
