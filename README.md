@@ -145,7 +145,7 @@ You can catch and report errors raised in your jobs by defining an error catcher
 the top of your Clockfile like this:
 
 ```ruby
-def schedule.on_error(job, error)
+on_error do |job, error|
   ErrorReporter.track_exception(error)
 end
 ```
