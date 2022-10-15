@@ -1,3 +1,3 @@
-module RubyClock
-  VERSION = "1.0.0"
+class RubyClock
+  VERSION = "2.0.0.?"
 end
