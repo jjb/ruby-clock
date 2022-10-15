@@ -4,6 +4,7 @@
   is implemented is now compatible with both rails 6 and 7
 * The setup for rails is now less complicated
 * RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS value is logged when starting
+* Code reorganization so there are no unnecessary methods in top-level Kernel namespace
 
 ### Migrating from ruby-clock version 1 to version 2
 
