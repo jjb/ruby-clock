@@ -286,7 +286,7 @@ This can be used for keeping track of job behavior in logs or a
 stats tracker. For example:
 
 ```ruby
-around(job_proc, job_info)
+around_action(job_proc, job_info)
   trigger_time = Time.now
   job_proc.call
   duration = Time.now-trigger_time.to_t
