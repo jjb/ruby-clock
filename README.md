@@ -152,7 +152,43 @@ end
 
 ### Callbacks
 
-You can define before, after, and around callbacks which will run for all jobs.
+You can define around callbacks which will run for all jobs, like shown below.
+This somewhat awkward syntax is necessary in order to enable the ability to define multiple callbacks.
+(perhaps in different files, shared by multiple Clockfiles, etc.).
+
+```ruby
+around_action do |job_proc, job_info|
+  puts "before1 #{job_info.class}"
+  job_proc.call
+  puts "after1"
+end
+
+around_action do |job_proc|
+  puts "before2"
+  job_proc.call
+  puts "after2"
+end
+
+every('2 seconds') do
+  puts "hello from a ruby-clock job"
+end
+```
+
+
+```
+before1 Rufus::Scheduler::EveryJob
+before2
+hello from a ruby-clock job
+after2
+after1
+```
+
+The around callbacks code will be run in the individual job thread.
+
+rufus-scheduler also provides before and after hooks. ruby-clock does not provide convenience methods for these
+but you can easily use them via the `schedule` object. These will run in the outer scheduling thread and not in
+the job thread, so they may have slightly different behavior in some cases. There is likely no reason to use them
+instead of `around_action`.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 

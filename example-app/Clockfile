@@ -1,5 +1,26 @@
 on_error do |job, error|
-  raise error
+  puts "An error has occurred: #{error.class}: #{error.message}"
+end
+# on_error do |job, error|
+#   raise error
+# end
+
+around_action do |job_proc, job_info|
+  puts "before1 #{job_info.class}"
+  job_proc.call
+  puts "after1"
+end
+
+around_action do |job_proc|
+  puts "before2"
+  job_proc.call
+  puts "after2"
+end
+
+around_action do |job_proc, job_info|
+  puts "before3 #{job_info.class}"
+  job_proc.call
+  puts "after3"
 end
 
 every('2 seconds') do
@@ -8,6 +29,10 @@ end
 
 every('2 seconds') do
   shell 'say hello'
+end
+
+every('2 seconds') do
+  raise "An error."
 end
 
 cron('*/10 * * * * *') do
