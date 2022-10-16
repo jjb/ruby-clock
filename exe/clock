@@ -62,12 +62,9 @@ end
 load ARGV[0] || 'Clockfile'
 
 if defined?(::Rails)
-  schedule.instance_eval do
-    @old_around_trigger = method :around_trigger
-    def around_trigger(job)
-      ::Rails.application.reloader.wrap do
-        @old_around_trigger.call(job){ yield }
-      end
+  around_action do |job_proc|
+    ::Rails.application.reloader.wrap do
+      job_proc.call
     end
   end
 end
