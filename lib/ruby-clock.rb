@@ -135,7 +135,7 @@ class RubyClock
     else
       call_with_around_action_stack(
         wrappers[1..],
-        Proc.new{wrappers.first.call(job_proc, job_info)},
+        Proc.new{ wrappers.first.call(job_proc, job_info) },
         job_info
       )
     end
