@@ -7,9 +7,13 @@
 * Code reorganization so there are no unnecessary methods in top-level Kernel namespace
 * DSL methods are now at the top-level namespace (`schedule.every` → `every`, `schedule.cron` → `cron`)
 * error handler definition is now at the top-level namespace (`def schedule.on_error` → `on_error do`)
+* around callbacks now have a top-level namespace method, which is different from the above in that...
+* multiple around callbacks can be consecutively assigned
 
 ### Migrating from ruby-clock version 1 to version 2
 
+* if you have and existing `def schedule.around_trigger`, you will need to change it to use the new
+  `around_action` method. see readme.
 * There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
 * The invocations (in Procfile, or wherever else you start ruby-clock) should change from
 
