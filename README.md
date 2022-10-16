@@ -286,10 +286,12 @@ This can be used for keeping track of job behavior in logs or a
 stats tracker. For example:
 
 ```ruby
-def schedule.on_post_trigger(job, trigger_time)
+around(job_proc, job_info)
+  trigger_time = Time.now
+  job_proc.call
   duration = Time.now-trigger_time.to_t
   StatsTracker.value('Clock: Job Execution Time', duration.round(2))
-  StatsTracker.value("Clock: Job #{job.identifier} Execution Time", duration.round(2))
+  StatsTracker.value("Clock: Job #{job_info.identifier} Execution Time", duration.round(2))
   StatsTracker.increment('Clock: Job Executions')
 end
 
