@@ -146,7 +146,7 @@ the top of your Clockfile like this:
 
 ```ruby
 on_error do |job, error|
-  ErrorReporter.track_exception(error)
+  ErrorReporter.track_exception(error, tag: 'clock', custom_attribute: {job_name: job.identifier})
 end
 ```
 
