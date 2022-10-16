@@ -90,9 +90,9 @@ You may wish to
 for your jobs. You can do so with the around trigger:
 
 ```ruby
-def schedule.around_trigger(job)
+around_action(job_proc)
   ActiveRecord::Base.uncached do
-    yield
+    job_proc.call
   end
 end
 ```
