@@ -41,6 +41,10 @@ def on_error(&on_error_block)
   end
 end
 
+def around_action(&b)
+  RubyClock.instance.around_actions << b
+end
+
 def cron(...)
   RubyClock.instance.schedule.cron(...)
 end
