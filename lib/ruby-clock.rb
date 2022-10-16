@@ -11,10 +11,10 @@ class RubyClock
   def initialize
     @around_actions = []
 
-    def schedule.around_trigger(job_info, &the_job)
+    def schedule.around_trigger(job_info, &job_proc)
       RubyClock.instance.call_with_around_action_stack(
         RubyClock.instance.around_actions.reverse,
-        the_job,
+        job_proc,
         job_info
       )
     end
@@ -128,14 +128,14 @@ class RubyClock
     end
   end
 
-  def call_with_around_action_stack(wrappers, b, job_info)
+  def call_with_around_action_stack(wrappers, job_proc, job_info)
     case wrappers.count
     when 0
-      b.call(job_info)
+      job_proc.call(job_info)
     else
       call_with_around_action_stack(
         wrappers[1..],
-        Proc.new{wrappers.first.call(b, job_info)},
+        Proc.new{wrappers.first.call(job_proc, job_info)},
         job_info
       )
     end
