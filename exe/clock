@@ -2,16 +2,11 @@
 
 require 'ruby-clock'
 RubyClock.detect_and_load_rails_app
-
 require 'rufus_monkeypatch'
-
 RubyClock.instance.listen_to_signals
 RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
-
 load ARGV[0] || 'Clockfile'
 RubyClock.instance.add_rails_executor_to_around_actions
-
 RubyClock.instance.freeze_around_actions
-
 RubyClock.instance.run_jobs
