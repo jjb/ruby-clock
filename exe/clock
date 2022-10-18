@@ -1,12 +1,8 @@
 #!/usr/bin/env ruby
 
-begin
-  require './config/environment.rb'
-  puts "Detected rails app has been loaded."
-rescue LoadError
-end
-
 require 'ruby-clock'
+RubyClock.detect_and_load_rails_app
+
 require 'method_source'
 
 class Rufus::Scheduler::Job
@@ -28,14 +24,7 @@ RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
 
 load ARGV[0] || 'Clockfile'
-
-if defined?(::Rails)
-  around_action do |job_proc|
-    ::Rails.application.reloader.wrap do
-      job_proc.call
-    end
-  end
-end
+RubyClock.instance.add_rails_executor_to_around_actions
 
 RubyClock.instance.freeze_around_actions
 

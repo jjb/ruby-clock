@@ -3,11 +3,14 @@ require "ruby-clock/rake"
 require "ruby-clock/shell"
 require "ruby-clock/around_actions"
 require "ruby-clock/dsl"
+require "ruby-clock/rails"
 require 'rufus-scheduler'
 require 'singleton'
 
 class RubyClock
   include Singleton
+  include RubyClock::Rails::InstanceMethods
+  extend RubyClock::Rails::ClassMethods
   include RubyClock::Rake
   include RubyClock::Shell
   include RubyClock::AroundActions
