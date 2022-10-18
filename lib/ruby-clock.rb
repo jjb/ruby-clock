@@ -1,11 +1,13 @@
 require "ruby-clock/version"
 require "ruby-clock/rake"
+require "ruby-clock/shell"
 require 'rufus-scheduler'
 require 'singleton'
 
 class RubyClock
   include Singleton
   include RubyClock::Rake
+  include RubyClock::Shell
 
   attr_accessor :on_error, :around_actions
 
@@ -58,43 +60,6 @@ class RubyClock
     puts "Starting ruby-clock with #{schedule.jobs.size} jobs"
     schedule.resume
     schedule.join
-  end
-
-  def shell_runner
-    @shell_runner ||= begin
-      require 'terrapin'
-      require 'posix-spawn'
-
-      unless Terrapin::CommandLine.runner.class == Terrapin::CommandLine::PosixRunner
-        puts <<~MESSAGE
-
-          🤷 terrapin and posix-spawn are installed, but for some reason terrapin is
-             not using posix-spawn as its runner.
-
-        MESSAGE
-      end
-
-      puts '🐆 Using terrapin for shell commands.'
-      :terrapin
-    rescue LoadError
-      puts <<~MESSAGE
-
-        🦥 Using ruby backticks for shell commands.
-           For better performance, install the terrapin and posix-spawn gems.
-           See README.md for more info.
-
-      MESSAGE
-      :backticks
-    end
-  end
-
-  def shell(command)
-    case shell_runner
-    when :terrapin
-      Terrapin::CommandLine.new(command).run
-    when :backticks
-      `#{command}`
-    end
   end
 
   def call_with_around_action_stack(wrappers, job_proc, job_info)
