@@ -3,3 +3,7 @@ load '../example-app/Clockfile'
 every('2 seconds') do
   puts Example.count
 end
+
+every('2 seconds') do
+  rake 'about'
+end
