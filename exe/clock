@@ -1,84 +1,12 @@
 #!/usr/bin/env ruby
 
-begin
-  require './config/environment.rb'
-  puts "Detected rails app has been loaded."
-rescue LoadError
-end
-
 require 'ruby-clock'
-require 'method_source'
-
-class Rufus::Scheduler::Job
-  def identifier
-    @identifier ||= begin
-      name || handler.source.split("\n").reject(&:empty?).grep_v(/#.*/)[-2].strip
-    rescue
-      begin
-        source_location.join('-')
-      rescue
-        'error-calculating-job-identifier'
-      end
-    end
-  end
-end
-
+RubyClock.detect_and_load_rails_app
+require 'rufus_monkeypatch'
 RubyClock.instance.listen_to_signals
 RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
-
-
-
-## Add methods to top-level namespace
-def schedule
-  RubyClock.instance.schedule
-end
-
-def on_error(&on_error_block)
-  RubyClock.instance.on_error = on_error_block
-  def schedule.on_error(job, error)
-    RubyClock.instance.on_error.call(job, error)
-  end
-end
-
-def around_action(&b)
-  RubyClock.instance.around_actions << b
-end
-
-def cron(...)
-  RubyClock.instance.schedule.cron(...)
-end
-
-def every(...)
-  RubyClock.instance.schedule.every(...)
-end
-
-def shell(string)
-  RubyClock.instance.shell(string)
-end
-
-def rake(string)
-  RubyClock.instance.rake(string)
-end
-
-def rake_execute(string)
-  RubyClock.instance.rake_execute(string)
-end
-
-def rake_async(string)
-  RubyClock.instance.rake_async(string)
-end
-#####################################
-
-
+RubyClock.instance.add_rails_executor_to_around_actions
 load ARGV[0] || 'Clockfile'
-
-if defined?(::Rails)
-  around_action do |job_proc|
-    ::Rails.application.reloader.wrap do
-      job_proc.call
-    end
-  end
-end
-
+RubyClock.instance.freeze_around_actions
 RubyClock.instance.run_jobs
