@@ -81,4 +81,6 @@ if defined?(::Rails)
   end
 end
 
+RubyClock.instance.freeze_around_actions
+
 RubyClock.instance.run_jobs

@@ -20,6 +20,10 @@ class RubyClock
     end
   end
 
+  def freeze_around_actions
+    @around_actions.freeze
+  end
+
   def wait_seconds
     ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
   end
