@@ -1,6 +1,12 @@
 on_error do |job, error|
-  puts "An error has occurred with job #{job.identifier}: #{error.class}: #{error.message}"
+  case job
+  when String
+    puts "#{job}: #{error.class}: #{error.message}"
+  else
+    puts "An error has occurred with job #{job.identifier}: #{error.class}: #{error.message}"
+  end
 end
+
 # on_error do |job, error|
 #   raise error
 # end
