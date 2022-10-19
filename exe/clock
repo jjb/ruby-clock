@@ -7,6 +7,16 @@ RubyClock.instance.listen_to_signals
 RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
 RubyClock.instance.add_rails_executor_to_around_actions
-load ARGV[0] || 'Clockfile'
+
+begin
+  load ARGV[0] || 'Clockfile'
+rescue => clockfile_error
+  if RubyClock.instance.on_error
+    RubyClock.instance.on_error.call("An error has occured while parsing the clockfile", clockfile_error)
+  end
+
+  raise
+end
+
 RubyClock.instance.freeze_around_actions
 RubyClock.instance.run_jobs

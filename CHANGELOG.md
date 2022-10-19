@@ -6,9 +6,10 @@
 * RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS value is logged when starting
 * Code reorganization so there are no unnecessary methods in top-level Kernel namespace
 * DSL methods are now at the top-level namespace (`schedule.every` → `every`, `schedule.cron` → `cron`)
-* error handler definition is now at the top-level namespace (`def schedule.on_error` → `on_error do`)
-* around callbacks now have a top-level namespace method, which is different from the above in that...
-* multiple around callbacks can be consecutively assigned
+* Error handler definition is now at the top-level namespace (`def schedule.on_error` → `on_error do`)
+* Around callbacks now have a top-level namespace method, which is different from the above in that...
+* Multiple around callbacks can be consecutively assigned
+* Report errors to error reporter when loading Clockfile
 
 ### Migrating from ruby-clock version 1 to version 2
 

@@ -142,11 +142,17 @@ add `$stdout.sync = true` to the top of your Clockfile.
 ### Error Handling
 
 You can catch and report errors raised in your jobs by defining an error catcher at
-the top of your Clockfile like this:
+the top of your Clockfile like this. You should handle these two cases so that you can get
+error reports about problems while loading the Clockfile:
 
 ```ruby
 on_error do |job, error|
-  ErrorReporter.track_exception(error, tag: 'clock', custom_attribute: {job_name: job.identifier})
+  case job
+  when String # this means there was a problem parsing the Clockfile while starting
+    ErrorReporter.track_exception(error, tag: 'clock', severity: 'high')
+  else
+    ErrorReporter.track_exception(error, tag: 'clock', custom_attribute: {job_name: job.identifier})
+  end
 end
 ```
 
