@@ -1,3 +1,5 @@
+using RubyClock::DSL
+
 load '../example-app/Clockfile'
 
 every('2 seconds') do
@@ -5,5 +7,10 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  rake 'about'
+  puts "we expect schedule to not be available inside a job: #{!defined?(schedule)}"
+  puts Example.check_for_global_method
+end
+
+every('2 seconds') do
+  RubyClock::Runners.rake 'about'
 end

@@ -1,3 +1,5 @@
+using RubyClock::DSL
+
 on_error do |job, error|
   case job
   when String
@@ -34,7 +36,7 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  shell 'say hello'
+  RubyClock::Runners.shell 'say hello'
 end
 
 every('2 seconds') do

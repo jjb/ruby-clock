@@ -1,8 +1,11 @@
+require "ruby-clock/dsl"
+using RubyClock::DSL
 require "ruby-clock/version"
 require "ruby-clock/rake"
 require "ruby-clock/shell"
 require "ruby-clock/around_actions"
 require "ruby-clock/dsl"
+require "ruby-clock/runners"
 require "ruby-clock/rails"
 require 'rufus-scheduler'
 require 'singleton'
@@ -14,7 +17,6 @@ class RubyClock
   include RubyClock::Rake
   include RubyClock::Shell
   include RubyClock::AroundActions
-  include RubyClock::DSL
 
   attr_accessor :on_error
 
