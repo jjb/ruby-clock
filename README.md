@@ -50,6 +50,8 @@ Create a file named Clockfile. This will hold your job definitions.
 Define jobs like this:
 
 ```ruby
+using RubyClock::DSL
+
 every('5 minutes') do
   UserDataReports.generate
 end
