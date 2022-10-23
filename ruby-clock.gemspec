@@ -8,6 +8,15 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A job scheduler which runs jobs each in their own thread in a persistent process.'
   # spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.post_install_message = <<~MESSAGE
+
+    If you are updating ruby-clock from 1→2, there are a few things you need to change in your Clockfile.
+
+    It's quick, easy, and fun! See instructions here:
+    https://github.com/jjb/ruby-clock/blob/main/CHANGELOG.md#migrating-from-ruby-clock-version-1-to-version-2
+
+  MESSAGE
+
   spec.homepage      = "https://github.com/jjb/ruby-clock"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.0")
