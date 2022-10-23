@@ -1,3 +1,5 @@
+using RubyClock::DSL
+
 on_error do |job, error|
   case job
   when String
@@ -23,24 +25,30 @@ around_action do |job_proc|
   puts "after2"
 end
 
-around_action do |job_proc, job_info|
-  puts "before3 #{job_info.class}"
-  job_proc.call
-  puts "after3"
-end
-
 every('2 seconds') do
   puts "hello from a ruby-clock job"
 end
 
 every('2 seconds') do
-  shell 'say hello'
+  RubyClock::Runners.shell 'say hello'
 end
 
 every('2 seconds') do
-  raise "An error."
+  raise "🐈️ this error is expected, to test the error catcher"
 end
 
 cron('*/10 * * * * *') do
   puts "cron running on every 10th second #{Time.now}"
+end
+
+every('2 seconds') do
+  if defined?(schedule)
+    raise "💥 we do not expect the ruby-clock DSL to be available inside a job, but it is"
+  end
+end
+
+every('2 seconds') do
+  if defined?(shell) || defined?(rake)
+    puts "💥 we do not expect runners to be available inside a job, but it is"
+  end
 end

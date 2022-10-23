@@ -1,4 +1,4 @@
-# There is also rails-relevant code in rake.lib
+# There is also rails-relevant code in rake.rb
 module RubyClock::Rails
   module ClassMethods
     def detect_and_load_rails_app
@@ -13,8 +13,8 @@ module RubyClock::Rails
   module InstanceMethods
     def add_rails_executor_to_around_actions
       if defined?(::Rails)
-        around_action do |job_proc|
-          ::Rails.application.reloader.wrap do
+        RubyClock.instance.around_actions << Proc.new do |job_proc|
+          ::Rails.application.executor.wrap do
             job_proc.call
           end
         end
