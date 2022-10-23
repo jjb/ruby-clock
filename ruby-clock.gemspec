@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["John Bachir"]
   spec.email         = ["j@jjb.cc"]
 
-  spec.summary       = 'A "clock" process for invoking ruby code within a persistent runtime'
+  spec.summary       = 'A job scheduler which runs jobs each in their own thread in a persistent process.'
   # spec.description   = %q{TODO: Write a longer description or delete this line.}
   spec.homepage      = "https://github.com/jjb/ruby-clock"
   spec.license       = "MIT"
