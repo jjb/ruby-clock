@@ -40,3 +40,15 @@ end
 cron('*/10 * * * * *') do
   puts "cron running on every 10th second #{Time.now}"
 end
+
+every('2 seconds') do
+  if defined?(schedule)
+    raise "💥 we do not expect the ruby-clock DSL to be available inside a job, but it is"
+  end
+end
+
+every('2 seconds') do
+  if defined?(shell) || defined?(rake)
+    puts "💥 we do not expect runners to be available inside a job, but it is"
+  end
+end
