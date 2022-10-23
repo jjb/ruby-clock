@@ -25,12 +25,6 @@ around_action do |job_proc|
   puts "after2"
 end
 
-around_action do |job_proc, job_info|
-  puts "before3 #{job_info.class}"
-  job_proc.call
-  puts "after3"
-end
-
 every('2 seconds') do
   puts "hello from a ruby-clock job"
 end
@@ -40,7 +34,7 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  raise "An error."
+  raise "🐈️ this error is expected, to test the error catcher"
 end
 
 cron('*/10 * * * * *') do

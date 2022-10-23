@@ -7,8 +7,17 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  puts "we expect schedule to not be available inside a job: #{!defined?(schedule)}"
+  if defined?(schedule)
+    raise "💥 we do not expect schedule to be available inside a job, but it is"
+  end
   puts Example.check_for_global_method
+end
+
+every('2 seconds') do
+  if defined?(shell) || defined?(rake)
+    puts "💥 we do not expect runners to be available inside a job, but it is"
+  end
+  puts Example.check_for_runner
 end
 
 every('2 seconds') do

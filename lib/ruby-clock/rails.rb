@@ -1,6 +1,5 @@
-using RubyClock::DSL
 
-# There is also rails-relevant code in rake.lib
+# There is also rails-relevant code in rake.rb
 module RubyClock::Rails
   module ClassMethods
     def detect_and_load_rails_app

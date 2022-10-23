@@ -1,5 +1,4 @@
 require "ruby-clock/dsl"
-using RubyClock::DSL
 require "ruby-clock/version"
 require "ruby-clock/rake"
 require "ruby-clock/shell"
