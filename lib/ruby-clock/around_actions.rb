@@ -15,6 +15,19 @@ module RubyClock::AroundActions
         job_info
       )
     end
+
+    self.around_trigger_code_location = schedule.method(:around_trigger).source_location
+  end
+
+  def ensure_around_trigger_has_not_been_redefined
+    if around_trigger_code_location != schedule.method(:around_trigger).source_location
+      raise <<~MESSAGE
+
+        You need to change your around_trigger definition to use around_actions instead.
+
+        It's easy and fun! https://github.com/jjb/ruby-clock/blob/main/CHANGELOG.md#migrating-from-ruby-clock-version-1-to-version-2
+      MESSAGE
+    end
   end
 
   def call_with_around_action_stack(wrappers, job_proc, job_info)

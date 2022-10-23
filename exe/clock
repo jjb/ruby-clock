@@ -18,5 +18,6 @@ rescue => clockfile_error
   raise
 end
 
+RubyClock.instance.ensure_around_trigger_has_not_been_redefined
 RubyClock.instance.freeze_around_actions
 RubyClock.instance.run_jobs

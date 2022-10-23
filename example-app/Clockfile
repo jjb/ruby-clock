@@ -52,3 +52,7 @@ every('2 seconds') do
     puts "💥 we do not expect runners to be available inside a job, but it is"
   end
 end
+
+# def schedule.around_trigger(job_info, &job_proc)
+#   puts "ruby-clock 1-style around trigger!"
+# end

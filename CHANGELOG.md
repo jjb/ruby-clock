@@ -24,8 +24,7 @@
 * The top of every Clockfile must begin with `using RubyClock::DSL`
 * rake and shell runners must be invoked like so: `RubyClock::Runners.rake`, `RubyClock::Runners.shell`, etc.
 * If you have an existing `def schedule.around_trigger`, you will need to change it to use the new
-  `around_action` method. Failure to change this will silently appear to keep working,
-  but will break the rails reloader/executor implementation.
+  `around_action` method.
 * Your existing Clockfile will still work, but you now have the option to use
   `every`, `cron`, and `on_error` at the top-level, without referencing `schedule`.
   See the readme for examples.
