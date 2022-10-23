@@ -1,4 +1,3 @@
-
 # There is also rails-relevant code in rake.rb
 module RubyClock::Rails
   module ClassMethods
