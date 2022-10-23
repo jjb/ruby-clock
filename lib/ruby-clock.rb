@@ -17,7 +17,7 @@ class RubyClock
   include RubyClock::Shell
   include RubyClock::AroundActions
 
-  attr_accessor :on_error
+  attr_accessor :on_error, :around_trigger_code_location
 
   def initialize
     set_up_around_actions
