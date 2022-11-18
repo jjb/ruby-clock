@@ -92,7 +92,7 @@ You may wish to
 for your jobs. You can do so with the around trigger:
 
 ```ruby
-around_action(job_proc)
+around_action do |job_proc|
   ActiveRecord::Base.uncached do
     job_proc.call
   end
@@ -295,7 +295,7 @@ This can be used for keeping track of job behavior in logs or a
 stats tracker. For example:
 
 ```ruby
-around_action(job_proc, job_info)
+around_action do |job_proc, job_info|
   trigger_time = Time.now
   job_proc.call
   duration = Time.now-trigger_time.to_t
