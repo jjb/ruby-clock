@@ -200,6 +200,32 @@ instead of `around_action`.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+### Variables
+
+Like all rufus-scheduler features,
+[local variables](https://github.com/jmettraux/rufus-scheduler/#--key-has_key-keys-values-and-entries)
+can be defined per job. These can be used
+in various ways, notably accessible by around actions and error handlers.
+
+```ruby
+cron '5 0 * * *', locals: { app_area: 'reports' } do
+  DailyActivitySummary.generate_and_send
+end
+
+around_action do |job_proc, job_info|
+  StatsTracker.increment("#{job_info[:app_area]} jobs")
+  job_proc.call
+end
+on_error do |job, error|
+  case job
+  when String # this means there was a problem parsing the Clockfile while starting
+    ErrorReporter.track_exception(error, tag: ['clock', job[:app_area]], severity: 'high')
+  else
+    ErrorReporter.track_exception(error, tag: ['clock', job[:app_area]], custom_attribute: {job_name: job.identifier})
+  end
+end
+```
+
 ### Shell commands
 
 You can run shell commands in your jobs.
