@@ -22,5 +22,21 @@ module RubyClock::DSL
     def every(...)
       RubyClock.instance.schedule.every(...)
     end
+
+    def shell(string)
+      RubyClock.instance.shell(string)
+    end
+
+    def rake(string)
+      RubyClock.instance.rake(string)
+    end
+
+    def rake_execute(string)
+      RubyClock.instance.rake_execute(string)
+    end
+
+    def rake_async(string)
+      RubyClock.instance.rake_async(string)
+    end
   end
 end

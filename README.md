@@ -92,7 +92,7 @@ You may wish to
 for your jobs. You can do so with the around trigger:
 
 ```ruby
-around_action(job_proc)
+around_action do |job_proc|
   ActiveRecord::Base.uncached do
     job_proc.call
   end
@@ -200,13 +200,39 @@ instead of `around_action`.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+### Variables
+
+Like all rufus-scheduler features,
+[local variables](https://github.com/jmettraux/rufus-scheduler/#--key-has_key-keys-values-and-entries)
+can be defined per job. These can be used
+in various ways, notably accessible by around actions and error handlers.
+
+```ruby
+cron '5 0 * * *', locals: { app_area: 'reports' } do
+  DailyActivitySummary.generate_and_send
+end
+
+around_action do |job_proc, job_info|
+  StatsTracker.increment("#{job_info[:app_area]} jobs")
+  job_proc.call
+end
+on_error do |job, error|
+  case job
+  when String # this means there was a problem parsing the Clockfile while starting
+    ErrorReporter.track_exception(error, tag: ['clock', job[:app_area]], severity: 'high')
+  else
+    ErrorReporter.track_exception(error, tag: ['clock', job[:app_area]], custom_attribute: {job_name: job.identifier})
+  end
+end
+```
+
 ### Shell commands
 
 You can run shell commands in your jobs.
 
 ```ruby
 every '1 day' do
-  RubyClock::Runners.shell('sh scripts/process_stuff.sh')
+  shell('sh scripts/process_stuff.sh')
 end
 ```
 
@@ -252,11 +278,11 @@ needing to shell out and start another process.
 
 ```ruby
 every '1 day' do
-  RubyClock::Runners.rake('reports:daily')
+  rake('reports:daily')
 end
 ```
 
-There is also `RubyClock::Runners.rake_execute` and `RubyClock::Runners.rake_async`.
+There are also `rake_execute` and `rake_async`.
 See [the code](https://github.com/jjb/ruby-clock/blob/main/lib/rake.rb)
 and [this article](https://code.jjb.cc/running-rake-tasks-from-within-ruby-on-rails-code) for more info.
 
@@ -295,7 +321,7 @@ This can be used for keeping track of job behavior in logs or a
 stats tracker. For example:
 
 ```ruby
-around_action(job_proc, job_info)
+around_action do |job_proc, job_info|
   trigger_time = Time.now
   job_proc.call
   duration = Time.now-trigger_time.to_t

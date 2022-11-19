@@ -12,22 +12,25 @@
   will be reported to the error handler
 
 ### Anti-Features
-* rake and shell runners are no longer top-level (`shell` → `RubyClock::Runners.shell`, `rake` → `RubyClock::Runners.rake`)
+* ruby 3.0 is now the minimum version
 
 ### Code Improvements
 * The code which implements the rails reloader/executor is now less complicated
 * Code reorganization so there are no unnecessary methods in top-level Kernel namespace
+* top-level DSL methods are now implemented with refinements, so they don't polute other code
 
 
 ### Migrating from ruby-clock version 1 to version 2
 
+* The minimum ruby version is 3.0
 * The top of every Clockfile must begin with `using RubyClock::DSL`
-* rake and shell runners must be invoked like so: `RubyClock::Runners.rake`, `RubyClock::Runners.shell`, etc.
 * If you have an existing `def schedule.around_trigger`, you will need to change it to use the new
   `around_action` method.
 * Your existing Clockfile will still work, but you now have the option to use
   `every`, `cron`, and `on_error` at the top-level, without referencing `schedule`.
   See the readme for examples.
+* You now have the option of catching and reporting errors encountered when parsing the Clockfile.
+  See the readme.
 * There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
 * The invocations (in Procfile, or wherever else you start ruby-clock) should change from
 

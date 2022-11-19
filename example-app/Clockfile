@@ -30,11 +30,11 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  RubyClock::Runners.shell 'say hello'
+  shell 'say hello'
 end
 
 every('2 seconds') do
-  raise "🐈️ this error is expected, to test the error catcher"
+  raise "😅 this error is expected, to test the error catcher"
 end
 
 cron('*/10 * * * * *') do
@@ -42,14 +42,18 @@ cron('*/10 * * * * *') do
 end
 
 every('2 seconds') do
-  if defined?(schedule)
-    raise "💥 we do not expect the ruby-clock DSL to be available inside a job, but it is"
+  if !defined?(schedule)
+    raise "💥 we expect the ruby-clock DSL to be available inside a job, but it is not"
+  else
+    puts '✅'
   end
 end
 
 every('2 seconds') do
-  if defined?(shell) || defined?(rake)
-    puts "💥 we do not expect runners to be available inside a job, but it is"
+  if !defined?(shell) || !defined?(rake)
+    puts "💥 we expect runners to be available inside a job, but they are not"
+  else
+    puts '✅'
   end
 end
 

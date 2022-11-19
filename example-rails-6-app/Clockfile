@@ -1,0 +1,19 @@
+using RubyClock::DSL
+
+load '../example-app/Clockfile'
+
+every('2 seconds') do
+  puts Example.count
+end
+
+every('2 seconds') do
+  puts Example.check_for_global_method
+end
+
+every('2 seconds') do
+  puts Example.check_for_runner
+end
+
+every('2 seconds') do
+  rake 'about'
+end
