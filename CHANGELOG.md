@@ -29,6 +29,8 @@
 * Your existing Clockfile will still work, but you now have the option to use
   `every`, `cron`, and `on_error` at the top-level, without referencing `schedule`.
   See the readme for examples.
+* You now have the option of catching and reporting errors encountered when parsing the Clockfile.
+  See the readme.
 * There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
 * The invocations (in Procfile, or wherever else you start ruby-clock) should change from
 
