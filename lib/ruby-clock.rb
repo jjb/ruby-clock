@@ -1,4 +1,3 @@
-require "ruby-clock/dsl"
 require "ruby-clock/version"
 require "ruby-clock/rake"
 require "ruby-clock/shell"

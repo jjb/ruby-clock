@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'ruby-clock'
+require "ruby-clock/dsl"
 RubyClock.detect_and_load_rails_app
 require 'rufus_monkeypatch'
 RubyClock.instance.listen_to_signals
