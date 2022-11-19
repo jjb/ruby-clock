@@ -15,5 +15,5 @@ every('2 seconds') do
 end
 
 every('2 seconds') do
-  RubyClock::Runners.rake 'about'
+  rake 'about'
 end

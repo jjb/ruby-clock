@@ -4,7 +4,6 @@ require "ruby-clock/rake"
 require "ruby-clock/shell"
 require "ruby-clock/around_actions"
 require "ruby-clock/dsl"
-require "ruby-clock/runners"
 require "ruby-clock/rails"
 require 'rufus-scheduler'
 require 'singleton'
