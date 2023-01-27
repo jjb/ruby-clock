@@ -7,8 +7,8 @@
 * DSL methods are now at the top-level namespace (`schedule.every` → `every`, `schedule.cron` → `cron`)
 * Error handler definition is now at the top-level namespace (`def schedule.on_error` → `on_error do`)
 * Around callbacks now have a top-level namespace method. `def schedule.around_trigger` → `around_action do`
-* Multiple around callbacks can be consecutively assigned - no need to put all behavior into one action
-* Errors encountered when loading Clockfile (such as incorrect cron syntaxt)
+* Multiple around callbacks can be consecutively assigned - no need to put all behavior into one method
+* Errors encountered when loading Clockfile (such as incorrect cron syntax)
   will be reported to the error handler
 
 ### Anti-Features
@@ -26,11 +26,9 @@
 * The top of every Clockfile must begin with `using RubyClock::DSL`
 * If you have an existing `def schedule.around_trigger`, you will need to change it to use the new
   `around_action` method.
-* Your existing Clockfile will still work, but you now have the option to use
+* Your existing Clockfile with `schedule.foo` invocations will still work, but you now have the option to use
   `every`, `cron`, and `on_error` at the top-level, without referencing `schedule`.
-  See the readme for examples.
 * You now have the option of catching and reporting errors encountered when parsing the Clockfile.
-  See the readme.
 * There is no longer a need to have a binstub in rails. You can delete bin/clock from your app.
 * The invocations (in Procfile, or wherever else you start ruby-clock) should change from
 
