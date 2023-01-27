@@ -6,7 +6,7 @@
 * RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS value is logged when starting
 * DSL methods are now at the top-level namespace (`schedule.every` → `every`, `schedule.cron` → `cron`)
 * Error handler definition is now at the top-level namespace (`def schedule.on_error` → `on_error do`)
-* Around callbacks now have a top-level namespace method. `def schedule.around_trigger` → `around_action` - see readme
+* Around callbacks now have a top-level namespace method. `def schedule.around_trigger` → `around_action do` - see readme
 * Multiple around callbacks can be consecutively assigned - no need to put all behavior into one action
 * Errors encountered when loading Clockfile (such as incorrect cron syntaxt)
   will be reported to the error handler
