@@ -283,7 +283,7 @@ end
 ```
 
 There are also `rake_execute` and `rake_async`.
-See [the code](https://github.com/jjb/ruby-clock/blob/main/lib/rake.rb)
+See [the code](https://github.com/jjb/ruby-clock/blob/main/lib/ruby-clock/rake.rb)
 and [this article](https://code.jjb.cc/running-rake-tasks-from-within-ruby-on-rails-code) for more info.
 
 ### Job Identifier
