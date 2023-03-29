@@ -28,7 +28,7 @@ You can change this number with `RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS` in the enviro
 
 ## Installation
 
-ruby >= 2.7 is required.
+ruby >= 3.0 is required.
 
 Add these lines to your application's Gemfile:
 
