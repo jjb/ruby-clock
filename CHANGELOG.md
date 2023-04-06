@@ -10,6 +10,7 @@
 * Multiple around callbacks can be consecutively assigned - no need to put all behavior into one method
 * Errors encountered when loading Clockfile (such as incorrect cron syntax)
   will be reported to the error handler
+* The automatic identifier generator will now ignore `}` and `end` lines
 
 ### Anti-Features
 * ruby 3.0 is now the minimum version

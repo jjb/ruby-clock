@@ -14,7 +14,7 @@ end
 # end
 
 around_action do |job_proc, job_info|
-  puts "before1 #{job_info.class}"
+  puts "before1 #{job_info.class} #{job_info.identifier}"
   job_proc.call
   puts "after1"
 end
@@ -60,3 +60,19 @@ end
 # def schedule.around_trigger(job_info, &job_proc)
 #   puts "ruby-clock 1-style around trigger!"
 # end
+
+every('2 seconds', blocking: true) do
+  begin
+
+    1.times {
+      begin
+        puts "hello from a stress test for the autonamer"
+      end
+
+    }
+    # this is a comment!
+
+  end
+  # another comment
+
+end
