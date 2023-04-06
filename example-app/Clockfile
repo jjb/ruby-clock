@@ -14,7 +14,7 @@ end
 # end
 
 around_action do |job_proc, job_info|
-  puts "before1 #{job_info.class}"
+  puts "before1 #{job_info.class} #{job_info.identifier}"
   job_proc.call
   puts "after1"
 end
