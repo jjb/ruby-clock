@@ -239,7 +239,7 @@ end
 By default they will be run with
 [ruby backticks](https://livebook.manning.com/concept/ruby/backtick).
 For better performance, install the [terrapin](https://github.com/thoughtbot/terrapin)
-and [posix-spawn](https://github.com/rtomayko/posix-spawn) gems.
+gem.
 
 `shell` is a convenience method which just passes the string on.
 If you want to use other terrapin features, you can skip the `shell` command

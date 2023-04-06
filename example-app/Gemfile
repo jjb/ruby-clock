@@ -6,4 +6,3 @@ ruby '>= 3.0'
 
 gem 'ruby-clock', path: '../'
 # gem 'terrapin'
-# gem 'posix-spawn'
