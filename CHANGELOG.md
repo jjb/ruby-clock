@@ -16,6 +16,7 @@
   and
   [terrapin#19](https://github.com/thoughtbot/terrapin/pull/19)
   for more info.
+* `--environment-and-syntax-check` capability
 
 ### Anti-Features
 * ruby 3.0 is now the minimum version

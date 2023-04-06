@@ -9,8 +9,21 @@ RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
 RubyClock.instance.add_rails_executor_to_around_actions
 
+clockfile = 'Clockfile'
+check_syntax = false
+case ARGV[0]
+when '--environment-and-syntax-check'
+  check_syntax = true
+  case ARGV[1]
+  when String
+    clockfile = ARGV[1]
+  end
+when String
+  clockfile = ARGV[0]
+end
+
 begin
-  load ARGV[0] || 'Clockfile'
+  load clockfile
 rescue => clockfile_error
   if RubyClock.instance.on_error
     RubyClock.instance.on_error.call("An error has occured while parsing the clockfile", clockfile_error)
@@ -21,4 +34,9 @@ end
 
 RubyClock.instance.ensure_around_trigger_has_not_been_redefined
 RubyClock.instance.freeze_around_actions
-RubyClock.instance.run_jobs
+
+if check_syntax
+  puts "✨ Environment & Syntax OK ✨"
+else
+  RubyClock.instance.run_jobs
+end

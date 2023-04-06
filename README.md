@@ -139,6 +139,17 @@ to another process or file. To change this behavior and have logs flush immediat
 add `$stdout.sync = true` to the top of your Clockfile.
 
 
+#### Testing
+
+You can use the `--environment-and-syntax-check` flag to load the app environment and check
+Clockfile syntax without actually running jobs. This can be used to check if cron syntax
+is valid during dev, or in automate tests.
+
+```ruby
+# system returns true/false depending on 0/1 exit status of process
+assert(system("bundle exec --environment-and-syntax-check clock/my_clockfile.rb"))
+```
+
 ## More Config and Capabilities
 
 ### Error Handling
