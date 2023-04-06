@@ -151,7 +151,7 @@ error reports about problems while loading the Clockfile:
 on_error do |job, error|
   case job
   when String # this means there was a problem parsing the Clockfile while starting
-    ErrorReporter.track_exception(error, tag: 'clock', severity: 'high')
+    ErrorReporter.track_exception(StandardError.new(error), tag: 'clock', severity: 'high')
   else
     ErrorReporter.track_exception(error, tag: 'clock', custom_attribute: {job_name: job.identifier})
   end
