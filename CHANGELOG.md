@@ -11,6 +11,11 @@
 * Errors encountered when loading Clockfile (such as incorrect cron syntax)
   will be reported to the error handler
 * The automatic identifier generator will now ignore `}` and `end` lines
+* posix-spawn is no longer used. In ruby 3, native `Process.spawn` is more performant. See
+  [posix-spawn#90](https://github.com/rtomayko/posix-spawn/issues/90)
+  and
+  [terrapin#19](https://github.com/thoughtbot/terrapin/pull/19)
+  for more info.
 
 ### Anti-Features
 * ruby 3.0 is now the minimum version

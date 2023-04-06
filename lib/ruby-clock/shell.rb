@@ -2,13 +2,11 @@ module RubyClock::Shell
   def shell_runner
     @shell_runner ||= begin
       require 'terrapin'
-      require 'posix-spawn'
-
-      unless Terrapin::CommandLine.runner.class == Terrapin::CommandLine::PosixRunner
+      unless Terrapin::CommandLine.runner.class == Terrapin::CommandLine::ProcessRunner
         puts <<~MESSAGE
 
-          🤷 terrapin and posix-spawn are installed, but for some reason terrapin is
-             not using posix-spawn as its runner.
+          🤷 terrapin is installed, but for some reason terrapin is
+            using backticks as its runner.
 
         MESSAGE
       end
@@ -19,7 +17,7 @@ module RubyClock::Shell
       puts <<~MESSAGE
 
         🦥 Using ruby backticks for shell commands.
-           For better performance, install the terrapin and posix-spawn gems.
+           For better performance, install the terrapin gem.
            See README.md for more info.
 
       MESSAGE
