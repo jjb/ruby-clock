@@ -9,17 +9,26 @@ RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
 RubyClock.instance.add_rails_executor_to_around_actions
 
-clockfile = 'Clockfile'
+if ARGV.count > 2
+  puts <<~MESSAGE
+    usage:
+    bundle exec --environment-and-syntax-check clock/my_clockfile.rb
+    bundle exec clock/my_clockfile.rb
+  MESSAGE
+  raise "too many arguments"
+end
+
 check_syntax = false
-case ARGV[0]
-when '--environment-and-syntax-check'
-  check_syntax = true
-  case ARGV[1]
-  when String
-    clockfile = ARGV[1]
+if '--' == ARGV[0][0..1]
+  case ARGV[0]
+  when '--environment-and-syntax-check'
+    check_syntax = true
+  else
+    raise 'unknown option'
   end
-when String
-  clockfile = ARGV[0]
+  clockfile = ARGV[1] || 'Clockfile'
+else
+  clockfile = ARGV[0] || 'Clockfile'
 end
 
 begin
