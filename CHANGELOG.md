@@ -16,7 +16,10 @@
   and
   [terrapin#19](https://github.com/thoughtbot/terrapin/pull/19)
   for more info.
-* `--environment-and-syntax-check` capability
+* ability to load multiple clockfiles with one invocation
+* job slugs based on job identifier, e.g. "Widget Co. Weekly Reports" -> "widget-co-weekly-reports"
+* `--check-slug-uniqueness`
+* `--environment-and-syntax-check`
 
 ### Anti-Features
 * ruby 3.0 is now the minimum version

@@ -1,6 +1,8 @@
 require 'method_source'
+
 class Rufus::Scheduler::Job
   UNDESIRED_ELEMENTS = ['', '}', 'end']
+
   def identifier
     @identifier ||= begin
       return name if name
@@ -17,5 +19,10 @@ class Rufus::Scheduler::Job
         'error-calculating-job-identifier'
       end
     end
+  end
+
+  def slug
+    require 'active_support/inflector'
+    identifier.gsub('_', '-').parameterize
   end
 end
