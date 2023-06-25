@@ -20,6 +20,7 @@
 * job slugs based on job identifier, e.g. "Widget Co. Weekly Reports" -> "widget-co-weekly-reports"
 * `--check-slug-uniqueness`
 * `--environment-and-syntax-check`
+* `--generate-dummy-crontab` to facilitate visualization with cronv
 
 ### Anti-Features
 * ruby 3.0 is now the minimum version

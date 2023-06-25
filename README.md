@@ -164,6 +164,18 @@ assert(system("bundle exec --check-slug-uniqueness")) # loads Clockfile
 assert(system("bundle exec --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
 ```
 
+#### Visualization with cronv
+
+Using the `--generate-dummy-crontab` flag you can visualize your schedule with [cronv](https://github.com/takumakanari/cronv).
+For your jobs with cron-style schedules, it will generate a dummy crontab file that can be ingested by cronv.
+For your jobs with "Every X seconds" schedules, a comment will be made in the file and they will not be vizualized.
+
+```console
+bundle exec clock --generate-dummy-crontab Clockfile ../clock/daily.rb ../clock/weekly.rb > dummycron.txt
+## IMPORTANT: open dummycron.txt in an editor and remove the boot startup message cruft from the top
+cat dummycron.txt | /Users/your-username/go/bin/cronv -d 1d -o ./my_cron_schedule.html
+open dummycron
+```
 
 ## More Config and Capabilities
 

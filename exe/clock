@@ -11,12 +11,15 @@ RubyClock.instance.add_rails_executor_to_around_actions
 
 check_syntax = false
 check_slug_uniqueness = false
+generate_dummy_crontab = false
 if '--' == ARGV[0][0..1]
   case ARGV[0]
   when '--environment-and-syntax-check'
     check_syntax = true
   when '--check-slug-uniqueness'
     check_slug_uniqueness = true
+  when '--generate-dummy-crontab'
+    generate_dummy_crontab = true
   else
     raise 'unknown option'
   end
@@ -67,6 +70,16 @@ elsif check_slug_uniqueness
   else
     puts "✨ All Slugs Are Unique ✨"
   end
+elsif generate_dummy_crontab
+  text = ''
+  RubyClock.instance.schedule.jobs.each do |j|
+    if j.respond_to?(:cron_line)
+      text << "#{j.cron_line.original} #{j.slug}\n"
+    else
+      text << "# every-#{j.frequency}-seconds #{j.slug}\n"
+    end
+  end
+  puts text
 else
   RubyClock.instance.run_jobs
 end
