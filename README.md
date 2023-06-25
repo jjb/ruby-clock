@@ -71,6 +71,11 @@ This will ignore Clockfile and only read jobs from clocks/MyClockfile:
 
     bundle exec clock clocks/MyClockfile
 
+You can also load multiple files with one invocation
+(although a better approach might be to load your subfiles within a top-level Clockfile):
+
+    bundle exec clock clocks/daily.rb clocks/weekly.rb
+
 ### Rails
 
 To run your clock process in your app's environment:
