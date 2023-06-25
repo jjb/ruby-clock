@@ -297,7 +297,7 @@ There are also `rake_execute` and `rake_async`.
 See [the code](https://github.com/jjb/ruby-clock/blob/main/lib/ruby-clock/rake.rb)
 and [this article](https://code.jjb.cc/running-rake-tasks-from-within-ruby-on-rails-code) for more info.
 
-### Job Identifier
+### Job Identifier & Slug
 
 ruby-clock adds the `identifier` method to `Rufus::Scheduler::Job`. This method will return the job's
 [name](https://github.com/jmettraux/rufus-scheduler/#name--string) if one was given.
@@ -305,30 +305,35 @@ If a name is not given, the last non-comment code line in the job's block
 will be used instead. If for some reason an error is encountered while calculating this, the next
 fallback is the line number of the job in Clockfile.
 
-Some examples of jobs and their identifiers:
+There is also the `slug` method, which produces a slug using
+[ActiveSupport parameterize](https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize),
+and with underscores changed to hyphens.
+If the `activesupport` gem is not in your Gemfile and you attempt to use `slug`, it will fail.
+
+Some examples of identifiers and slugs:
 
 ```ruby
 every '1 second', name: 'my job' do
   Foo.bar
 end
-# => my job
+# my job, my-job
 
 every '1 day' do
   daily_things = Foo.setup_daily
   daily_things.process
   # TODO: figure out best time of day
 end
-# => daily_things.process
+# daily_things.process, daily-things-process
 
 # n.b. ruby-clock isn't yet smart enough to remove trailing comments
 every '1 week' do
   weekly_things = Foo.setup_weekly
   weekly_things.process # does this work???!1~
 end
-# => weekly_things.process # does this work???!1~
+# weekly_things.process # does this work???!1~, weekly-things-process-does-this-work-1
 ```
 
-This can be used for keeping track of job behavior in logs or a
+The identifier can be used for keeping track of job behavior in logs or a
 stats tracker. For example:
 
 ```ruby
@@ -353,6 +358,18 @@ every '10 seconds', name: 'thread stats' do
   StatsTracker.value("Clock: Active Threads", schedule.work_threads(:active).size)
   StatsTracker.value("Clock: Vacant Threads", schedule.work_threads(:vacant).size)
   StatsTracker.value("Clock: DB Pool Size", ActiveRecord::Base.connection_pool.connections.size)
+end
+```
+
+The slug can be used for similar purposes where a slug-style string is needed. Here you can report
+your job to a scheduled job monitor:
+
+```ruby
+# TODO proper example for healthcheks
+around_action do |job_proc, job_info|
+  Net::HTTP.get("https://mymonitor.example.com/APIKEY/start/#{job_info.slug}")
+  job_proc.call
+  Net::HTTP.get("https://mymonitor.example.com/APIKEY/stop/#{job_info.slug}")
 end
 ```
 

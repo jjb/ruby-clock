@@ -5,4 +5,5 @@ source "https://rubygems.org"
 ruby '>= 3.0'
 
 gem 'ruby-clock', path: '../'
+gem 'activesupport'
 # gem 'terrapin'

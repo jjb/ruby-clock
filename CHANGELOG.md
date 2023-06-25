@@ -16,6 +16,7 @@
   and
   [terrapin#19](https://github.com/thoughtbot/terrapin/pull/19)
   for more info.
+* job slugs based on job identifier, e.g. "Widget Co. Weekly Reports" -> "widget-co-weekly-reports"
 * `--environment-and-syntax-check` capability
 
 ### Anti-Features
