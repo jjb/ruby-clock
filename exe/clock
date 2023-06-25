@@ -9,15 +9,6 @@ RubyClock.instance.prepare_rake
 RubyClock.instance.schedule.pause
 RubyClock.instance.add_rails_executor_to_around_actions
 
-if ARGV.count > 2
-  puts <<~MESSAGE
-    usage:
-    bundle exec --environment-and-syntax-check clock/my_clockfile.rb
-    bundle exec clock/my_clockfile.rb
-  MESSAGE
-  raise "too many arguments"
-end
-
 check_syntax = false
 if '--' == ARGV[0][0..1]
   case ARGV[0]
@@ -26,19 +17,29 @@ if '--' == ARGV[0][0..1]
   else
     raise 'unknown option'
   end
-  clockfile = ARGV[1] || 'Clockfile'
+  if ARGV[1]
+    clockfiles = ARGV[1..]
+  else
+    clockfiles = ['Clockfile']
+  end
 else
-  clockfile = ARGV[0] || 'Clockfile'
+  if ARGV[0]
+    clockfiles = ARGV[0..]
+  else
+    clockfiles = ['Clockfile']
+  end
 end
 
-begin
-  load clockfile
-rescue => clockfile_error
-  if RubyClock.instance.on_error
-    RubyClock.instance.on_error.call("An error has occured while parsing the clockfile", clockfile_error)
-  end
+clockfiles.each do |clockfile|
+  begin
+    load clockfile
+  rescue => clockfile_error
+    if RubyClock.instance.on_error
+      RubyClock.instance.on_error.call("An error has occured while parsing the clockfile #{clockfile}", clockfile_error)
+    end
 
-  raise
+    raise
+  end
 end
 
 RubyClock.instance.ensure_around_trigger_has_not_been_redefined
