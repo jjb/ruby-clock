@@ -33,7 +33,7 @@ ruby >= 3.0 is required.
 Add these lines to your application's Gemfile:
 
 ```ruby
-gem 'ruby-clock'
+gem 'ruby-clock', '2.0.0.beta9'
 ```
 
 And then execute:
