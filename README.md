@@ -171,10 +171,18 @@ For your jobs with cron-style schedules, it will generate a dummy crontab file t
 For your jobs with "Every X seconds" schedules, a comment will be made in the file and they will not be vizualized.
 
 ```console
+## install go
+brew install go
+sudo port install go
+
+## install cronv https://github.com/takumakanari/cronv#go-install
+go install -v github.com/takumakanari/cronv/cronv@0.4.5
+
+## generate dummy crontab
 bundle exec clock --generate-dummy-crontab Clockfile ../clock/daily.rb ../clock/weekly.rb > dummycron.txt
 ## IMPORTANT: open dummycron.txt in an editor and remove the boot startup message cruft from the top
-cat dummycron.txt | /Users/your-username/go/bin/cronv -d 1d -o ./my_cron_schedule.html
-open dummycron
+cat dummycron.txt | ~/go/bin/cronv -d 1d -o ./my_cron_schedule.html
+open my_cron_schedule.html
 ```
 
 ## More Config and Capabilities
