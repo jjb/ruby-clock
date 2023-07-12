@@ -181,7 +181,7 @@ go install -v github.com/takumakanari/cronv/cronv@0.4.5
 ## generate dummy crontab
 bundle exec clock --generate-dummy-crontab Clockfile ../clock/daily.rb ../clock/weekly.rb > dummycron.txt
 ## IMPORTANT: open dummycron.txt in an editor and remove the boot startup message cruft from the top
-cat dummycron.txt | ~/go/bin/cronv -d 1d -o ./my_cron_schedule.html
+cat dummycron.txt | ~/go/bin/cronv --duration=1d --title='Clock Jobs' --width=50 -o ./my_cron_schedule.html
 open my_cron_schedule.html
 ```
 
