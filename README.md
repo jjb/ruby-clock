@@ -172,8 +172,8 @@ For your jobs with "Every X seconds" schedules, a comment will be made in the fi
 
 ```console
 ## install go
-brew install go
-sudo port install go
+brew install go # homebrew
+sudo port install go # macports
 
 ## install cronv https://github.com/takumakanari/cronv#go-install
 go install -v github.com/takumakanari/cronv/cronv@0.4.5
