@@ -1,4 +1,4 @@
-## 2.0.0 beta
+## 2.0.0
 
 ### Features
 * The way the [rails app reloader](https://guides.rubyonrails.org/threading_and_code_execution.html)
