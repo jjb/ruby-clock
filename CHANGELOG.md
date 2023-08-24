@@ -1,3 +1,10 @@
+## 2.0.1
+
+### Bug fix
+
+* Invoking without specifying a Clockfile was broken when one of the flags was
+  implemented. This is fixed now.
+
 ## 2.0.0
 
 ### Features
