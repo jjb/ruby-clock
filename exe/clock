@@ -12,7 +12,7 @@ RubyClock.instance.add_rails_executor_to_around_actions
 check_syntax = false
 check_slug_uniqueness = false
 generate_dummy_crontab = false
-if '--' == ARGV[0][0..1]
+if ARGV[0] && '--' == ARGV[0][0..1]
   case ARGV[0]
   when '--environment-and-syntax-check'
     check_syntax = true
