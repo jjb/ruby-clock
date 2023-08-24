@@ -28,7 +28,7 @@ You can change this number with `RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS` in the enviro
 
 ruby >= 3.0 is required.
 
-Add these lines to your application's Gemfile:
+Add this to your Gemfile:
 
 ```ruby
 gem 'ruby-clock', require: false
