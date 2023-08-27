@@ -259,7 +259,7 @@ You can run shell commands in your jobs.
 
 ```ruby
 every '1 day' do
-  shell('sh scripts/process_stuff.sh')
+  shell('scripts/process_stuff.sh')
 end
 ```
 
