@@ -174,7 +174,19 @@ will kick off background jobs. This allows the clock process to run with very li
 for a Clockfile with hundreds of jobs that run close to one another or at the same time. It also decreases
 the liklihood that a restart or deploy will cause a job to not run.
 
-For this reason, there will probably never been support for using multiple cores. Even for a very complex schedule,
+```ruby
+# bad
+every '1 minute' do
+  User.needs_update.find_each{|u| u.update_stats }
+end
+
+# good
+every '1 minute' do
+  UserStatsUpdaterJob.perform_async
+end
+```
+
+For this reason, there will probably never be support for using multiple cores. Even for a very complex schedule,
 one core and not a lot of ram should suffice.
 
 That said, it's perfectly fine to do work in ruby-clock. Maybe for a new project, you just have a few scheduled
