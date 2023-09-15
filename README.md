@@ -116,7 +116,7 @@ thing_reporter: bundle exec clock clocks/thing_reporter.rb
 
 Because of this feature, do I regret using "Clockfile" instead of, say, "clock.rb"? Maybe.
 
-#### Observing logs
+### Observing logs
 
 Because STDOUT does not flush until a certain amount of data has gone into it,
 you might not immediately see the ruby-clock startup message or job output if
@@ -125,7 +125,8 @@ to another process or file. To change this behavior and have logs flush immediat
 add `$stdout.sync = true` to the top of your Clockfile.
 
 
-#### Testing
+
+### Testing
 
 You can use the `--environment-and-syntax-check` flag to load the app environment and check
 Clockfile syntax without actually running jobs. This can be used to check if cron syntax
@@ -145,7 +146,7 @@ assert(system("bundle exec --check-slug-uniqueness")) # loads Clockfile
 assert(system("bundle exec --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
 ```
 
-#### Visualization with cronv
+### Visualization with cronv
 
 Using the `--generate-dummy-crontab` flag you can visualize your schedule with [cronv](https://github.com/takumakanari/cronv).
 For your jobs with cron-style schedules, it will generate a dummy crontab file that can be ingested by cronv.
@@ -165,6 +166,20 @@ bundle exec clock --generate-dummy-crontab Clockfile ../clock/daily.rb ../clock/
 cat dummycron.txt | ~/go/bin/cronv --duration=1d --title='Clock Jobs' --width=50 -o ./my_cron_schedule.html
 open my_cron_schedule.html
 ```
+
+## Best Practice: use ruby-clock for scheduling, not work
+
+It's a good idea to do as little work as possible in the clock job. Ideally, your clock jobs
+will kick off background jobs. This allows the clock process to run with very little resources, even
+for a Clockfile with hundreds of jobs that run close to one another or at the same time. It also decreases
+the liklihood that a restart or deploy will cause a job to not run.
+
+For this reason, there will probably never been support for using multiple cores. Even for a very complex schedule,
+one core and not a lot of ram should suffice.
+
+That said, it's perfectly fine to do work in ruby-clock. Maybe for a new project, you just have a few scheduled
+tasks, and just want to write out the business logic all in one place and be done with it. There's no risk of lock-in
+with this approach. You can easily move the work to a background job at any time down the road.
 
 ## More Config and Capabilities
 
