@@ -404,15 +404,16 @@ every '10 seconds', name: 'thread stats' do
 end
 ```
 
-The slug can be used for similar purposes where a slug-style string is needed. Here you can report
-your job to a scheduled job monitor:
+The slug can be used for similar purposes where a slug-style string is needed. Here's an example
+reporting a job to a scheduled job monitor, using
+[healthchecks.io](https://blog.healthchecks.io/2023/07/new-feature-check-auto-provisioning/)
+as an example:
 
 ```ruby
-# TODO proper example for healthcheks
 around_action do |job_proc, job_info|
-  Net::HTTP.get("https://mymonitor.example.com/APIKEY/start/#{job_info.slug}")
+  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}/start")
   job_proc.call
-  Net::HTTP.get("https://mymonitor.example.com/APIKEY/stop/#{job_info.slug}")
+  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}")
 end
 ```
 
