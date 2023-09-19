@@ -411,9 +411,9 @@ as an example:
 
 ```ruby
 around_action do |job_proc, job_info|
-  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}/start")
+  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}/start?create=1")
   job_proc.call
-  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}")
+  Net::HTTP.get("https://hc-ping.com/#{ENV['HEALTHCHECKS_PING_KEY']}/#{job_info.slug}?create=1")
 end
 ```
 
