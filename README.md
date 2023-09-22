@@ -1,4 +1,4 @@
-_These are the docs for version 2.0.0. See version 1 docs here: https://github.com/jjb/ruby-clock/tree/v1.0.0_
+_These are the docs for version 2. See version 1 docs here: https://github.com/jjb/ruby-clock/tree/v1.0.0_
 
 # ruby-clock
 
