@@ -134,7 +134,7 @@ is valid during dev, or in automate tests.
 
 ```ruby
 # system returns true/false depending on 0/1 exit status of process
-assert(system("bundle exec --environment-and-syntax-check clock/my_clockfile.rb"))
+assert(system("bundle exec clock --environment-and-syntax-check clock/my_clockfile.rb"))
 ```
 
 You can use `--check-slug-uniqueness` to check if all the auto-generated slugs are unique. If you have
@@ -142,8 +142,8 @@ multiple files with jobs, you need to pass them all in with one invocation in or
 
 ```ruby
 # system returns true/false depending on 0/1 exit status of process
-assert(system("bundle exec --check-slug-uniqueness")) # loads Clockfile
-assert(system("bundle exec --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
+assert(system("bundle exec clock --check-slug-uniqueness")) # loads Clockfile
+assert(system("bundle exec clock --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
 ```
 
 ### Visualization with cronv
