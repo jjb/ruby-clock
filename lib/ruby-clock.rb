@@ -24,6 +24,9 @@ class RubyClock
     ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
   end
 
+  # shutdown is done async in a Thread because signal handlers should
+  # not have mutex locks created within them, which I believe can happen in
+  # the rufus shutdown process
   def shutdown(old_handler=nil)
     Thread.new do
       sleep 0.1 # wait for trap block to exit
@@ -48,7 +51,10 @@ class RubyClock
         else
           shutdown
         end
-        puts "received #{signal}"
+
+        # keep this line here at the end, to serve as some degree of demonstration that
+        # the handler exited before shutdown begins
+        puts("received #{signal}") && STDOUT.flush
       end
     end
     puts "RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS is set to #{wait_seconds}"
