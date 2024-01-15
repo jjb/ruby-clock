@@ -15,7 +15,6 @@ class RubyClock
   include RubyClock::AroundActions
 
   attr_accessor :on_error, :around_trigger_code_location
-  attr_accessor :should_shutdown, :old_shutdown_handler
 
   def initialize
     set_up_around_actions
@@ -25,26 +24,19 @@ class RubyClock
     ENV['RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS']&.to_i || 29
   end
 
-  def listen_for_shutdown
+  def shutdown(old_handler=nil)
     Thread.new do
-      loop do
-        sleep 1
-        if should_shutdown
-          shutdown
-          if old_shutdown_handler
-            old_shutdown_handler.call
-          else
-            exit
-          end
-        end
+      sleep 0.1 # wait for trap block to exit
+      puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
+      schedule.shutdown(wait: wait_seconds)
+      puts "...done 🐈️ 👋"
+      if old_handler
+        puts "handing off shutdown to another signal handler..."
+        old_handler.call
+      else
+        exit
       end
     end
-  end
-
-  def shutdown
-    puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
-    schedule.shutdown(wait: wait_seconds)
-    puts "...done 🐈️ 👋"
   end
 
   def listen_to_signals
@@ -52,9 +44,11 @@ class RubyClock
     signals.each do |signal|
       old_handler = Signal.trap(signal) do
         if old_handler.respond_to?(:call)
-          self.old_shutdown_handler = old_handler
+          shutdown(old_handler)
+        else
+          shutdown
         end
-        self.should_shutdown = true
+        puts "received #{signal}"
       end
     end
     puts "RUBY_CLOCK_SHUTDOWN_WAIT_SECONDS is set to #{wait_seconds}"
