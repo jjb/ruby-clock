@@ -152,7 +152,7 @@ Using the `--generate-dummy-crontab` flag you can visualize your schedule with [
 For your jobs with cron-style schedules, it will generate a dummy crontab file that can be ingested by cronv.
 For your jobs with "Every X seconds" schedules, a comment will be made in the file and they will not be vizualized.
 
-```console
+```shell
 ## install go
 brew install go # homebrew
 sudo port install go # macports
