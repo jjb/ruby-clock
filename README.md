@@ -254,6 +254,31 @@ instead of `around_action`.
 Read [the rufus-scheduler documentation](https://github.com/jmettraux/rufus-scheduler/#callbacks)
 to learn how to do this. Where the documentation references `s`, you should use `schedule`.
 
+## Max Worker Threads
+
+You can define the maximum number of worker threads that ruby-clock will use.
+
+```ruby
+schedule.max_work_threads = 42
+```
+
+[The default is 28](https://github.com/jmettraux/rufus-scheduler/#max_work_threads).
+
+Impact of this number:
+* **It will determine the max number of database connections
+  used.** The highest number of simultaneous jobs running _which access the database_ will be the highest
+  number of database connections used at any one time. If all of your jobs are not doing work, but only enqueueing background jobs,
+  and you use a redis-backed background job system, then they will use no database connections, so even a high number of
+  simultaneous threads is not an issue. If you use a database-backed background job system, that's a very different story, and
+  you may want to keep this in mind when setting this value.
+* **If threads are not available, jobs will wait to be enqueued.** If jobs are very fast (like if they only enqueue background jobs),
+  then this doesn't matter much, even with a very high number of simultaneous jobs. If 100 jobs which each take an average of 1 second
+  are scheduled at the same time:
+  * with 100 threads they will take about 1 second
+  * with 50 threads they will take about 2 seconds
+  * with 25 threads they will take about 4 seconds
+  * with 12 threads they will take about 8 seconds
+
 ### Variables
 
 Like all rufus-scheduler features,
