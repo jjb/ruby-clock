@@ -7,3 +7,12 @@ To run:
 bundle
 bundle exec clock
 ```
+
+To test invocation of existing signal handlers, put this code at the very top of exe/clock:
+
+```ruby
+Signal.trap('INT') do
+  puts "This is a well-behaving INT handler from outside of ruby-clock"
+  exit
+end
+```
