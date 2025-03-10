@@ -27,7 +27,7 @@ class RubyClock
   def shutdown
     puts "Shutting down ruby-clock. Waiting #{wait_seconds} seconds for jobs to finish..."
     schedule.shutdown(wait: wait_seconds)
-    puts "...done 🐈️ 👋"
+    puts "...done 🐈 👋"
   end
 
   def listen_to_signals
