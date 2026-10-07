@@ -1,3 +1,9 @@
+## Unreleased
+
+### Features
+
+* `--check-local-uniqueness=KEY` fails when two jobs share a value for the job local `KEY`
+
 ## 2.0.1
 
 ### Bug fix

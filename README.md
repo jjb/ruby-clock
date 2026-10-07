@@ -139,6 +139,18 @@ assert(system("bundle exec clock --check-slug-uniqueness")) # loads Clockfile
 assert(system("bundle exec clock --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
 ```
 
+You can use `--check-local-uniqueness=KEY` to check that no two jobs share a value for a
+job local (the rufus-scheduler `l:` or `locals:` option, read in a job with `job[:KEY]`). This is useful when a local
+carries a per-job ID for an external system, such as a monitoring check ID that a copy-pasted job
+could accidentally reuse. Jobs without that local are ignored.
+
+```ruby
+# cron '0 * * * *', l: { hc_id: 'abc123' } do
+#   ...
+# end
+assert(system("bundle exec clock --check-local-uniqueness=hc_id clock/weekly.rb clock/daily.rb"))
+```
+
 ### Visualization with cronv
 
 Using the `--generate-dummy-crontab` flag you can visualize your schedule with [cronv](https://github.com/takumakanari/cronv).
