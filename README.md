@@ -121,34 +121,42 @@ add `$stdout.sync = true` to the top of your Clockfile.
 
 ### Testing
 
-You can use the `--environment-and-syntax-check` flag to load the app environment and check
+There are a few checks you can add to your CI to keep your schedule jobs in good shape.
+They all return 0 if successful or non-0 if not successful.
+If running in a CI context which runs shell, you can simply invoke them as shown.
+If running in a CI context which runs ruby, you can wrap them in `assert(system("..."))`
+(`system` in ruby runs shell and returns `true`/`false` depending on 0/non-0).
+
+#### `--environment-and-syntax-check`
+Load the app environment and check
 Clockfile syntax without actually running jobs. This can be used to check if cron syntax
 is valid during dev, or in automate tests.
 
-```ruby
-# system returns true/false depending on 0/1 exit status of process
-assert(system("bundle exec clock --environment-and-syntax-check clock/my_clockfile.rb"))
+```shell
+bundle exec clock --environment-and-syntax-check
 ```
 
-You can use `--check-slug-uniqueness` to check if all the auto-generated slugs are unique. If you have
+#### `--check-slug-uniqueness`
+Check if all the auto-generated slugs are unique. If you have
 multiple files with jobs, you need to pass them all in with one invocation in order to check global uniqueness.
 
-```ruby
-# system returns true/false depending on 0/1 exit status of process
-assert(system("bundle exec clock --check-slug-uniqueness")) # loads Clockfile
-assert(system("bundle exec clock --check-slug-uniqueness clock/weekly.rb clock/daily.rb")) # load specific files
+```shell
+bundle exec clock --check-slug-uniqueness # loads Clockfile
+bundle exec clock --check-slug-uniqueness clock/weekly.rb clock/daily.rb # load specific files
 ```
 
-You can use `--check-local-uniqueness=KEY` to check that no two jobs share a value for a
+#### `--check-local-uniqueness=KEY`
+Check that no two jobs share a value for a
 job local (the rufus-scheduler `l:` or `locals:` option, read in a job with `job[:KEY]`). This is useful when a local
 carries a per-job ID for an external system, such as a monitoring check ID that a copy-pasted job
 could accidentally reuse. Jobs without that local are ignored.
 
 ```ruby
-# cron '0 * * * *', l: { hc_id: 'abc123' } do
-#   ...
-# end
-assert(system("bundle exec clock --check-local-uniqueness=hc_id clock/weekly.rb clock/daily.rb"))
+cron '0 * * * *', l: { hc_id: 'abc123' } do ...
+```
+
+```shell
+bundle exec clock --check-local-uniqueness=hc_id
 ```
 
 ### Visualization with cronv
