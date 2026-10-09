@@ -76,15 +76,14 @@ elsif check_slug_uniqueness
     puts "✨ All Slugs Are Unique ✨"
   end
 elsif check_local_uniqueness
-  slugs_by_value = Hash.new { |h, key| h[key] = [] }
+  counts = Hash.new(0)
   RubyClock.instance.schedule.jobs.each do |j|
-    value = j[local_key]
-    slugs_by_value[value] << j.slug unless value.nil?
+    next unless value = j[local_key]
+    counts[value] += 1
   end
-  duplicates = slugs_by_value.select { |_value, slugs| slugs.size > 1 }
+  duplicates = counts.select { |_value, count| count > 1 }.keys
   if duplicates.any?
-    puts "The following values of #{local_key} are shared by more than one job:"
-    duplicates.each { |value, slugs| puts "  #{value}: #{slugs.join(', ')}" }
+    puts "The following values of #{local_key} are shared by more than one job: #{duplicates}"
     exit(false)
   else
     puts "✨ All #{local_key} Values Are Unique ✨"
