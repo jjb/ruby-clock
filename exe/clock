@@ -20,13 +20,16 @@ if ARGV[0] && '--' == ARGV[0][0..1]
     check_syntax = true
   when '--check-slug-uniqueness'
     check_slug_uniqueness = true
-  when /\A--check-local-uniqueness=(.+)\z/
+  when /\A--check-local-uniqueness(?:=(.*))?\z/
+    if $1.to_s.strip.empty?
+      raise ArgumentError, '--check-local-uniqueness needs a key, e.g. --check-local-uniqueness=hc_id'
+    end
     check_local_uniqueness = true
     local_key = $1.to_sym
   when '--generate-dummy-crontab'
     generate_dummy_crontab = true
   else
-    raise 'unknown option'
+    raise "unknown option: #{ARGV[0]}"
   end
   if ARGV[1]
     clockfiles = ARGV[1..]
