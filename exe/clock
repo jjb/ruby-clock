@@ -74,10 +74,9 @@ elsif check_slug_uniqueness
     puts "✨ All Slugs Are Unique ✨"
   end
 elsif check_local_uniqueness
-  # Locals can be keyed by symbol (`l: { hc_id: '...' }`) or by string.
   slugs_by_value = Hash.new { |h, value| h[value] = [] }
   RubyClock.instance.schedule.jobs.each do |j|
-    value = j[check_local_uniqueness.to_sym] || j[check_local_uniqueness]
+    value = j[check_local_uniqueness.to_sym]
     slugs_by_value[value] << j.slug unless value.nil?
   end
   duplicates = slugs_by_value.select { |_value, slugs| slugs.size > 1 }
