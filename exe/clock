@@ -11,7 +11,8 @@ RubyClock.instance.add_rails_executor_to_around_actions
 
 check_syntax = false
 check_slug_uniqueness = false
-check_local_uniqueness = nil
+check_local_uniqueness = false
+local_key = nil
 generate_dummy_crontab = false
 if ARGV[0] && '--' == ARGV[0][0..1]
   case ARGV[0]
@@ -20,7 +21,8 @@ if ARGV[0] && '--' == ARGV[0][0..1]
   when '--check-slug-uniqueness'
     check_slug_uniqueness = true
   when /\A--check-local-uniqueness=(.+)\z/
-    check_local_uniqueness = $1
+    check_local_uniqueness = true
+    local_key = $1.to_sym
   when '--generate-dummy-crontab'
     generate_dummy_crontab = true
   else
@@ -74,18 +76,18 @@ elsif check_slug_uniqueness
     puts "✨ All Slugs Are Unique ✨"
   end
 elsif check_local_uniqueness
-  slugs_by_value = Hash.new { |h, value| h[value] = [] }
+  slugs_by_value = Hash.new { |h, key| h[key] = [] }
   RubyClock.instance.schedule.jobs.each do |j|
-    value = j[check_local_uniqueness.to_sym]
+    value = j[local_key]
     slugs_by_value[value] << j.slug unless value.nil?
   end
   duplicates = slugs_by_value.select { |_value, slugs| slugs.size > 1 }
   if duplicates.any?
-    puts "The following values of #{check_local_uniqueness} are shared by more than one job:"
+    puts "The following values of #{local_key} are shared by more than one job:"
     duplicates.each { |value, slugs| puts "  #{value}: #{slugs.join(', ')}" }
     exit(false)
   else
-    puts "✨ All #{check_local_uniqueness} Values Are Unique ✨"
+    puts "✨ All #{local_key} Values Are Unique ✨"
   end
 elsif generate_dummy_crontab
   text = ''
